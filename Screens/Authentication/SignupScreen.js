@@ -1,41 +1,49 @@
 import * as React from "react";
 import { Text, View, Image, TextInput, TouchableOpacity } from "react-native";
 import { useState } from "react";
+import styles from "./SignupScreen.style";
+import FormInput from "../../Components/Inputs/FormInput";
 
 const SignupScreen = ({ navigation }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const [confirmPassword, setConfirmPassword] = useState();
 
   return (
     <View>
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Image
-          source={require("../../assets/logo.png")}
-          style={{ width: 500, height: 500 }}
+      <View style={styles.container}>
+        <Text>Create an account</Text>
+        <FormInput
+          labelValue={email}
+          onChangeText={(userEmail) => setEmail(userEmail)}
+          placeholderText="Email"
+          iconType="user"
+          keyboardType="email-address"
+          autoCapitalize="none"
+          autoCorrect={false}
         />
-        <TextInput
-          style={{ height: 40 }}
-          placeholder="Email"
-          onChangeText={(newText) => setEmail(newText)}
-          defaultValue={email}
+        <FormInput
+          labelValue={password}
+          onChangeText={(userPassword) => setPassword(userPassword)}
+          placeholderText="Password"
+          iconType="lock"
+          secureTextEntry={true}
         />
-        <TextInput
-          style={{ height: 40 }}
-          placeholder="Password"
-          onChangeText={(newText) => setPassword(newText)}
-          defaultValue={password}
-        />
-        <TextInput
-          style={{ height: 40 }}
-          placeholder="Confirm Password"
-          onChangeText={(newText) => setPassword(newText)}
-          defaultValue={password}
+        <FormInput
+          labelValue={confirmPassword}
+          onChangeText={(userPassword) => setConfirmPassword(userPassword)}
+          placeholderText="Confirm Password"
+          iconType="lock"
+          secureTextEntry={true}
         />
       </View>
       <TouchableOpacity>
         <Text>Sign Up</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate("LoginScreen")}>
+      <TouchableOpacity
+        style={styles.navButton}
+        onPress={() => navigation.navigate("LoginScreen")}
+      >
         <Text>Have an account? Log in</Text>
       </TouchableOpacity>
     </View>
