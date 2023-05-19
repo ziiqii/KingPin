@@ -1,23 +1,17 @@
-import { View, Text, Button } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { auth } from "../../firebase";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import WelcomeScreen from "../Welcome/WelcomeScreen";
+import SettingsScreen from "../Settings/SettingsScreen";
+import BallsScreen from "../BallsScreen/BallsScreen";
 
-const HomeScreen = ({ navigation }) => {
-  const handleSignOut = () => {
-    auth
-      .signOut()
-      .then(() => {
-        navigation.replace("LoginScreen");
-      })
-      .catch((error) => alert(error.message));
-  };
+const Tab = createBottomTabNavigator();
 
+const HomeScreen = () => {
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Text>Home Screen</Text>
-      <Text>Email: {auth.currentUser?.email}</Text>
-      <Button title="sign out" onPress={handleSignOut}></Button>
-    </View>
+    <Tab.Navigator>
+      <Tab.Screen name="Balls" component={BallsScreen} />
+      <Tab.Screen name="Welcome" component={WelcomeScreen} />
+      <Tab.Screen name="Settings" component={SettingsScreen} />
+    </Tab.Navigator>
   );
 };
 
