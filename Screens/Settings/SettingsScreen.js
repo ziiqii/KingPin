@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Button } from "react-native";
+import { Text, View, Button } from "react-native";
 import React from "react";
 import { auth } from "../../firebase";
 

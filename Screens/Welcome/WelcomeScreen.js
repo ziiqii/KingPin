@@ -1,7 +1,7 @@
-import { View, Text, Button } from "react-native";
+import { View, Text } from "react-native";
 import { auth } from "../../firebase";
 
-const WelcomeScreen = ({ navigation }) => {
+const WelcomeScreen = () => {
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <Text>Welcome UserXXX</Text>
