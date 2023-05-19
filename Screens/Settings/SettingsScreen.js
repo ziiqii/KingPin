@@ -2,8 +2,6 @@ import { StyleSheet, Text, View, Button } from "react-native";
 import React from "react";
 import { auth } from "../../firebase";
 
-
-
 const SettingsScreen = ({ navigation }) => {
   const handleSignOut = () => {
     auth
@@ -17,7 +15,6 @@ const SettingsScreen = ({ navigation }) => {
   return (
     <View>
       <Text>SettingsScreen</Text>
-      <Button onPress={() => navigation.replace("HomeScreen")} title="Go back from SettingsScreen"></Button>
       <Button title="sign out" onPress={handleSignOut}></Button>
     </View>
   );

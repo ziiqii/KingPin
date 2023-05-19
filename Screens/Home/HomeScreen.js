@@ -1,17 +1,17 @@
-import { View, Text, Button } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { View, Text, Button, Settings } from "react-native";
 import { auth } from "../../firebase";
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import WelcomeScreen from "../Welcome/WelcomeScreen";
+import SettingsScreen from "../Settings/SettingsScreen";
+
+const Tab = createBottomTabNavigator();
 
 const HomeScreen = ({ navigation }) => {
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Text>Home Screen</Text>
-      <Text>Email: {auth.currentUser?.email}</Text>
-      <Button
-        title="Settings"
-        onPress={() => navigation.replace("SettingsScreen")}
-      ></Button>
-    </View>
+    <Tab.Navigator>
+      <Tab.Screen name="Welcome" component={WelcomeScreen} />
+      <Tab.Screen name="Settings" component={SettingsScreen} />
+    </Tab.Navigator>
   );
 };
 
