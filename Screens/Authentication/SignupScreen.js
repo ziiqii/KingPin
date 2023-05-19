@@ -3,14 +3,25 @@ import { Text, View, Image, TextInput, TouchableOpacity } from "react-native";
 import { useState } from "react";
 import styles from "./SignupScreen.style";
 import FormInput from "../../Components/Inputs/FormInput";
+import { auth } from "../../firebase";
 
 const SignupScreen = ({ navigation }) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [confirmPassword, setConfirmPassword] = useState();
 
+  const handleSignUp = () => {
+    auth
+      .createUserWithEmailAndPassword(email, password)
+      .then((userCredentials) => {
+        const user = userCredentials.user;
+        console.log("Signed up with: ", user.email);
+      })
+      .catch((error) => alert(error.message));
+  };
+
   return (
-    <View>
+    <View style={styles.container}>
       <View style={styles.container}>
         <Text>Create an account</Text>
         <FormInput
@@ -37,7 +48,7 @@ const SignupScreen = ({ navigation }) => {
           secureTextEntry={true}
         />
       </View>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={handleSignUp}>
         <Text>Sign Up</Text>
       </TouchableOpacity>
       <TouchableOpacity
