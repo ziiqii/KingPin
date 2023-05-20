@@ -1,5 +1,5 @@
-import { Text, View, Button } from "react-native";
 import React from "react";
+import { Text, View, Button } from "react-native";
 import { auth } from "../../firebase";
 
 const SettingsScreen = ({ navigation }) => {
@@ -14,7 +14,7 @@ const SettingsScreen = ({ navigation }) => {
 
   return (
     <View>
-      <Text>SettingsScreen</Text>
+      <Text>Email: {auth.currentUser?.email}</Text>
       <Button title="sign out" onPress={handleSignOut}></Button>
     </View>
   );

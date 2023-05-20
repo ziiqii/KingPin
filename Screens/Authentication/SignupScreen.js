@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { Text, View, Image, TextInput, TouchableOpacity } from "react-native";
 import { useState } from "react";
 import styles from "./SignupScreen.style";
