@@ -3,21 +3,23 @@ import { Text, View, Image, TextInput, TouchableOpacity } from "react-native";
 import { useState } from "react";
 import styles from "./SignupScreen.style";
 import FormInput from "../../Components/Inputs/FormInput";
-import { auth } from "../../firebase";
+
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 const SignupScreen = ({ navigation }) => {
+  const auth = getAuth();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [confirmPassword, setConfirmPassword] = useState();
 
   const handleSignUp = () => {
-    auth
-      .createUserWithEmailAndPassword(email, password)
+    createUserWithEmailAndPassword(auth, email, password)
       .then((userCredentials) => {
+        // Signed in
         const user = userCredentials.user;
         console.log("Signed up with: ", user.email);
       })
-      .catch((error) => alert(error.message));
+      .catch((error) => alert(error.code + ": " + error.message));
   };
 
   return (
