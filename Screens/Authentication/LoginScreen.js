@@ -3,10 +3,10 @@ import { View, Text, TouchableOpacity, Image } from "react-native";
 import FormInput from "../../Components/Inputs/FormInput";
 import FormButton from "../../Components/Buttons/FormButton";
 import styles from "./LoginScreen.style";
-
-import { auth } from "../../firebase";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 const LoginScreen = ({ navigation }) => {
+  const auth = getAuth();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
 
@@ -21,8 +21,7 @@ const LoginScreen = ({ navigation }) => {
   }, []);
 
   const handleLogin = () => {
-    auth
-      .signInWithEmailAndPassword(email, password)
+    signInWithEmailAndPassword(auth, email, password)
       .then((userCredentials) => {
         const user = userCredentials.user;
         console.log("Logged in with: ", user.email);
