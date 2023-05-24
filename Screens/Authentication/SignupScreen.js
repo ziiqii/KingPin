@@ -3,7 +3,6 @@ import { Text, View, Image, TextInput, TouchableOpacity } from "react-native";
 import { useState } from "react";
 import styles from "./SignupScreen.style";
 import FormInput from "../../Components/Inputs/FormInput";
-
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 const SignupScreen = ({ navigation }) => {

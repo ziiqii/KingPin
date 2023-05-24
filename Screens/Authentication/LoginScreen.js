@@ -3,7 +3,6 @@ import { View, Text, TouchableOpacity, Image } from "react-native";
 import FormInput from "../../Components/Inputs/FormInput";
 import FormButton from "../../Components/Buttons/FormButton";
 import styles from "./LoginScreen.style";
-
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 

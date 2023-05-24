@@ -1,12 +1,14 @@
 import React from "react";
 import { Text, View, Button } from "react-native";
-import { auth } from "../../firebase";
+import { getAuth, signOut } from "firebase/auth";
 
 const SettingsScreen = ({ navigation }) => {
+  const auth = getAuth();
+
   const handleSignOut = () => {
-    auth
-      .signOut()
+    signOut(auth)
       .then(() => {
+        // Sign-out successful
         navigation.replace("LoginScreen");
       })
       .catch((error) => alert(error.message));
