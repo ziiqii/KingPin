@@ -54,7 +54,7 @@ const BallsScreen = () => {
       >
         <View>
           <Text>Welcome to the modal</Text>
-          <CreateBall />
+          <CreateBall toggleModal={toggleModal} />
           <Button title="Hide Modal" onPress={toggleModal} />
         </View>
       </Modal>

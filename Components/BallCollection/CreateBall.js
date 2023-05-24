@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../../firebase";
 
-export default function CreateBall() {
+export default function CreateBall({ toggleModal }) {
   const [addedBall, setAddedBall] = useState({ balls: "" });
 
   function addBall() {
@@ -20,7 +20,12 @@ export default function CreateBall() {
         value={addedBall.balls}
         onChangeText={(text) => setAddedBall({ ...addedBall, balls: text })}
       />
-      <Pressable onPress={addBall}>
+      <Pressable
+        onPress={() => {
+          addBall();
+          toggleModal();
+        }}
+      >
         <Text>Add Ball</Text>
       </Pressable>
     </View>
