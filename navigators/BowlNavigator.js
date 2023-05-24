@@ -8,8 +8,8 @@ const Stack = createNativeStackNavigator();
 
 export default BowlNavigation = ({ navigation, route }) => {
   React.useLayoutEffect(() => {
-    const routeName = getFocusedRouteNameFromRoute(route);
-    if (routeName === "StartBowlScreen") {
+    const tabHiddenRoutes = ["StartBowlScreen"];
+    if (tabHiddenRoutes.includes(getFocusedRouteNameFromRoute(route))) {
       navigation.setOptions({ tabBarStyle: { display: "none" } });
     } else {
       navigation.setOptions({ tabBarStyle: { display: "flex" } });
