@@ -8,34 +8,65 @@ export default StyleSheet.create({
     backgroundColor: "#4d4d4d",
   },
   border: {
-    borderWidth: 2,
+    borderWidth: 1,
     borderColor: "#c83737",
   },
-  frames: {
-    height: 40,
-    backgroundColor: "#280b0b",
+  tableTop: {
+    frames: {
+      height: 40,
+      backgroundColor: "#280b0b",
+    },
+    frameText: {
+      color: "#ffffff",
+      fontSize: 15,
+      textAlign: "center",
+    },
+    rolls: {
+      height: 40,
+      backgroundColor: "#280b0b",
+    },
+    rollText: {
+      color: "#ffffff",
+      fontSize: 20,
+      textAlign: "center",
+    },
+    scores: {
+      height: 40,
+      backgroundColor: "#280b0b",
+    },
+    scoreText: {
+      color: "#e1ffff",
+      fontSize: 20,
+      textAlign: "center",
+    },
   },
-  frameTextTop: {
-    color: "#ffffff",
-    fontSize: 15,
-    textAlign: "center",
-  },
-  rolls: {
-    height: 40,
-    backgroundColor: "#280b0b",
-  },
-  rollTextTop: {
-    color: "#ffffff",
-    fontSize: 20,
-    textAlign: "center",
-  },
-  scores: {
-    height: 40,
-    backgroundColor: "#280b0b",
-  },
-  scoreTextTop: {
-    color: "#e1ffff",
-    fontSize: 20,
-    textAlign: "center",
+  tableBot: {
+    frames: {
+      height: 40,
+      backgroundColor: "#280b0b",
+    },
+    frameText: {
+      color: "#ffffff",
+      fontSize: 15,
+      textAlign: "center",
+    },
+    rolls: {
+      height: 40,
+      backgroundColor: "#280b0b",
+    },
+    rollText: {
+      color: "#ffffff",
+      fontSize: 20,
+      textAlign: "center",
+    },
+    scores: {
+      height: 40,
+      backgroundColor: "#280b0b",
+    },
+    scoreText: {
+      color: "#e1ffff",
+      fontSize: 20,
+      textAlign: "center",
+    },
   },
 });
