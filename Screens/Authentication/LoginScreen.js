@@ -5,7 +5,6 @@ import FormButton from "../../Components/Buttons/FormButton";
 import styles from "./LoginScreen.style";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
-
 const LoginScreen = ({ navigation }) => {
   const auth = getAuth();
   const [email, setEmail] = useState();
