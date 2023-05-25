@@ -6,16 +6,18 @@ import { db } from "../../firebase";
 export default function CreateBall({ toggleModal }) {
   const [addedBall, setAddedBall] = useState({ balls: "" });
 
-  function addBall() {
-    const ballDb = collection(db, "ballCollection");
-    addDoc(ballDb, {
+  const addBall = async () => {
+    const ballCollection = collection(db, "ballCollection");
+    const newBallRef = await addDoc(ballCollection, {
       balls: addedBall.balls,
     });
-  }
+    console.log("Ball written with ID: ", newBallRef.id);
+  };
 
   return (
     <View style={styles.container}>
       <TextInput
+        fontSize={30}
         placeholder="Add your ball here"
         value={addedBall.balls}
         onChangeText={(text) => setAddedBall({ ...addedBall, balls: text })}
@@ -26,7 +28,7 @@ export default function CreateBall({ toggleModal }) {
           toggleModal();
         }}
       >
-        <Text>Add Ball</Text>
+        <Text style={{ fontSize: 30 }}>Add Ball</Text>
       </Pressable>
     </View>
   );

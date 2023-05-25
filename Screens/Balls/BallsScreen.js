@@ -7,6 +7,8 @@ import { db } from "../../firebase";
 import CreateBall from "../../Components/BallCollection/CreateBall";
 import DeleteBall from "../../Components/BallCollection/DeleteBall";
 
+
+
 const BallsScreen = () => {
   const [isModalVisible, setModalVisible] = useState(false);
 
@@ -30,7 +32,7 @@ const BallsScreen = () => {
 
   const renderItem = ({ item }) => (
     <View>
-      <Text>{item.balls}</Text>
+      <Text style={{fontSize: 20}}>{item.balls}: {item.id}</Text>
       <DeleteBall id={item.id} />
     </View>
   );
