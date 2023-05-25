@@ -29,7 +29,7 @@ if (getApps().length === 0) {
 }
 
 // Initialize our own auth, and use async storage for auth persistence
-export const auth = initializeAuth(app, {
+const auth = initializeAuth(app, {
   persistence: getReactNativePersistence(AsyncStorage),
 });
 

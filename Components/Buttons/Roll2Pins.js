@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, TouchableOpacity } from "react-native";
 
-const Pin = ({ buttonTitle, isRemaining, onPress, ...rest }) => {
+const Roll2Pins = ({ buttonTitle, aftRoll2, onPress, ...rest }) => {
   // Call the onPress function from the parent component
   const handlePress = () => {
     onPress();
@@ -16,7 +16,7 @@ const Pin = ({ buttonTitle, isRemaining, onPress, ...rest }) => {
         alignItems: "center",
         padding: 10,
         borderRadius: 100,
-        backgroundColor: isRemaining ? "orange" : "white",
+        backgroundColor: aftRoll2 ? "orange" : "white",
         borderWidth: 1,
       }}
       onPress={handlePress}
@@ -27,7 +27,7 @@ const Pin = ({ buttonTitle, isRemaining, onPress, ...rest }) => {
   );
 };
 
-export default Pin;
+export default Roll2Pins;
 
 // const styles = StyleSheet.create({
 //   pin: {
