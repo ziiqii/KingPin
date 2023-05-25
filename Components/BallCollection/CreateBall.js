@@ -1,17 +1,25 @@
 import { StyleSheet, Text, View, TextInput, Pressable } from "react-native";
 import React, { useState } from "react";
-import { collection, addDoc } from "firebase/firestore";
+import { doc, collection, addDoc } from "firebase/firestore";
 import { db } from "../../firebase";
+import { getAuth } from "firebase/auth";
 
 export default function CreateBall({ toggleModal }) {
+  const auth = getAuth();
   const [addedBall, setAddedBall] = useState({ balls: "" });
 
   const addBall = async () => {
-    const ballCollection = collection(db, "ballCollection");
-    const newBallRef = await addDoc(ballCollection, {
-      balls: addedBall.balls,
-    });
-    console.log("Ball written with ID: ", newBallRef.id);
+    const userRef = doc(db, "users", auth.currentUser?.email);
+    const ballCollectionRef = collection(userRef, "balls"); // collection(reference, collectionName)
+
+    try {
+      const newBallRef = await addDoc(ballCollectionRef, {
+        name: addedBall.balls,
+      });
+      console.log("Ball written with ID: ", newBallRef.id);
+    } catch (error) {
+      console.error("Error adding ball:", error);
+    }
   };
 
   return (

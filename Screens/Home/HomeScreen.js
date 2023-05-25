@@ -7,6 +7,10 @@ import FeatureNavigation from "../../navigators/FeatureNavigator";
 const HomeScreen = () => {
   const auth = getAuth();
 
+  useEffect(() => {
+    createUserIfNotExist();
+  }, []);
+
   const createUserIfNotExist = async () => {
     const data = {
       email: auth.currentUser?.email,
@@ -16,7 +20,7 @@ const HomeScreen = () => {
     // Currently using email to identify our users, easier to view and test.
     // Consider switching to uid in future for consistency and security.
     // This is the target document.
-    const newUserRef = doc(db, "users", auth.currentUser?.email); // doc(db, collection, fileName)
+    const newUserRef = doc(db, "users", auth.currentUser?.email); // doc(reference, collection, docName)
 
     // Fetches latest document snapshot, else undefined.
     const newUserSnap = await getDoc(newUserRef);
@@ -24,14 +28,14 @@ const HomeScreen = () => {
     if (newUserSnap.exists()) {
       console.log(`User ${auth.currentUser?.email}'s file already exists!`);
     } else {
-      await setDoc(newUserRef, data); // setDoc(reference, data)
-      console.log("New user doc written with ID: ", newUserRef.id);
+      try {
+        await setDoc(newUserRef, data); // setDoc(reference, data)
+        console.log("New user doc written with ID: ", newUserRef.id);
+      } catch (error) {
+        console.error("Error adding user:", error);
+      }
     }
   };
-
-  useEffect(() => {
-    createUserIfNotExist();
-  }, []);
 
   return <FeatureNavigation />;
 };
