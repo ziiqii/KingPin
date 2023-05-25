@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Text, View, TouchableOpacity } from "react-native";
-import Pin from "../../Components/Buttons/Pin";
+import Pin from "../../Components/Buttons/ClickablePin";
 
 const Roll1 = ({ navigation }) => {
   // This toggles the state of the pins
@@ -35,7 +35,6 @@ const Roll1 = ({ navigation }) => {
         <Pin
           key={pin.id}
           buttonTitle={pin.id.toString()}
-          id={pin.id}
           isRemaining={pin.isRemaining}
           onPress={() => {
             togglePinState(pin.id);
@@ -46,7 +45,11 @@ const Roll1 = ({ navigation }) => {
       <TouchableOpacity>
         <Text>Strike</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.replace("Roll2")}>
+      <TouchableOpacity
+        onPress={() =>
+          navigation.replace("Roll2", { pinState, togglePinState })
+        }
+      >
         <Text>Confirm</Text>
       </TouchableOpacity>
     </View>
