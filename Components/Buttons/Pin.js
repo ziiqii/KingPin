@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Text, TouchableOpacity, StyleSheet } from "react-native";
+import React from "react";
+import { Text, TouchableOpacity } from "react-native";
 
 const Pin = ({ buttonTitle, isRemaining, onPress, ...rest }) => {
   // Call the onPress function from the parent component
