@@ -14,17 +14,24 @@ const Roll1 = ({ navigation }) => {
     )
   );
   const togglePinState = (id) => {
-    setPinState(() => {
-      return {
-        ...pinState,
-        [id]: { ...pinState[id], aftRoll1: !pinState[id].aftRoll1 },
-      };
-    });
+    const updatedPinState = {
+      ...pinState,
+      [id]: { ...pinState[id], aftRoll1: !pinState[id].aftRoll1 },
+    };
+    setPinState(updatedPinState);
   };
 
   const setStrike = () => {};
 
-  const resetState = () => {};
+  const resetState = () => {
+    const updatedPinState = Object.fromEntries(
+      Object.entries(pinState).map(([id, pin]) => [
+        id,
+        { ...pin, aftRoll1: false },
+      ])
+    );
+    setPinState(updatedPinState);
+  };
 
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
@@ -42,8 +49,8 @@ const Roll1 = ({ navigation }) => {
       <TouchableOpacity>
         <Text>Strike</Text>
       </TouchableOpacity>
-      <TouchableOpacity>
-        <Text>Cancel</Text>
+      <TouchableOpacity onPress={() => resetState()}>
+        <Text>Reset</Text>
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() => navigation.replace("Roll2", { pinState })}
