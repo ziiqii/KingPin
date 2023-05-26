@@ -7,18 +7,24 @@ const Roll1 = ({ navigation }) => {
   // aftRoll#: whether or not pin left standing after Roll#
   const [pinState, setPinState] = useState(
     Object.fromEntries(
-      Array.from({length: 10}, (_, index) => [index + 1, {aftRoll1: false, aftRoll2: false}])
+      Array.from({ length: 10 }, (_, index) => [
+        index + 1,
+        { aftRoll1: false, aftRoll2: false },
+      ])
     )
   );
   const togglePinState = (id) => {
-    const updatedPinState = () => {
-      return {...pinState, [id]: {...pinState[id], aftRoll1: !pinState[id].aftRoll1}}
-    };
-    setPinState(updatedPinState);
+    setPinState(() => {
+      return {
+        ...pinState,
+        [id]: { ...pinState[id], aftRoll1: !pinState[id].aftRoll1 },
+      };
+    });
   };
 
-  const setStrike = () => {
-  };
+  const setStrike = () => {};
+
+  const resetState = () => {};
 
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
