@@ -34,7 +34,7 @@ const BallsScreen = () => {
   const renderItem = ({ item }) => (
     <View>
       <Text style={{ fontSize: 20 }}>
-        {item.name}: {item.id}
+        {item.name} (id: {item.id})
       </Text>
       <DeleteBall id={item.id} />
     </View>
