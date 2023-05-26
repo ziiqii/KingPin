@@ -10,8 +10,8 @@ const PinDown = ({ buttonTitle, onPress, ...rest }) => {
   return (
     <TouchableOpacity
       style={{
-        width: 75,
-        height: 75,
+        width: 50,
+        height: 50,
         justifyContent: "center",
         alignItems: "center",
         padding: 10,
@@ -23,7 +23,7 @@ const PinDown = ({ buttonTitle, onPress, ...rest }) => {
       onPress={handlePress}
       {...rest}
     >
-      <Text style={{ fontSize: 30, color: "#a6a6a6" }}>{buttonTitle}</Text>
+      <Text style={{ fontSize: 20, color: "#a6a6a6" }}>{buttonTitle}</Text>
     </TouchableOpacity>
   );
 };
