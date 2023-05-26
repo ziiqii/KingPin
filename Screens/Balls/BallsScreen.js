@@ -2,14 +2,14 @@ import React, { useState, useEffect } from "react";
 import { Button, Text, View, FlatList } from "react-native";
 import { SearchBar } from "@rneui/themed";
 import Modal from "react-native-modal";
-import { collection, onSnapshot } from "firebase/firestore";
+import { doc, collection, onSnapshot } from "firebase/firestore";
 import { db } from "../../firebase";
 import CreateBall from "../../Components/BallCollection/CreateBall";
 import DeleteBall from "../../Components/BallCollection/DeleteBall";
-
-
+import { getAuth } from "firebase/auth";
 
 const BallsScreen = () => {
+  const auth = getAuth();
   const [isModalVisible, setModalVisible] = useState(false);
 
   const toggleModal = () => {
@@ -21,7 +21,8 @@ const BallsScreen = () => {
 
   useEffect(() => {
     setLoading(true);
-    const ballQuery = collection(db, "ballCollection");
+    const userRef = doc(db, "users", auth.currentUser?.email);
+    const ballQuery = collection(userRef, "balls");
     onSnapshot(ballQuery, (snapshot) => {
       let ballList = [];
       snapshot.docs.map((doc) => ballList.push({ ...doc.data(), id: doc.id }));
@@ -32,7 +33,9 @@ const BallsScreen = () => {
 
   const renderItem = ({ item }) => (
     <View>
-      <Text style={{fontSize: 20}}>{item.balls}: {item.id}</Text>
+      <Text style={{ fontSize: 20 }}>
+        {item.name}: {item.id}
+      </Text>
       <DeleteBall id={item.id} />
     </View>
   );
