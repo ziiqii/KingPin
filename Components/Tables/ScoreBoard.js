@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import React from "react";
 import {
   Table,
@@ -8,7 +8,7 @@ import {
   Col,
   Cols,
   Cell,
-} from "react-native-table-component";
+} from "react-native-reanimated-table";
 import styles from "./ScoreBoard.style";
 
 const ScoreBoard = () => {
@@ -49,7 +49,7 @@ const ScoreBoard = () => {
         />
         <Row
           data={rollsBot}
-          flexArr={[0.99, 0.98, 0.99, 0.98, 0.99, 0.99, 0.98, 0.98, 0.98, 3.01]}
+          flexArr={[0.99, 0.99, 0.99, 0.98, 0.99, 0.98, 0.98, 0.98, 0.98, 3.01]}
           style={styles.tableBot.rolls}
           textStyle={styles.tableBot.rollText}
         />
