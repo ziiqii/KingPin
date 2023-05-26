@@ -1,52 +1,108 @@
 import React, { useState } from "react";
 import { Text, View, TouchableOpacity } from "react-native";
-import Roll1Pins from "../../Components/Buttons/Roll1Pins";
+import PinInit from "../../Components/Buttons/PinInit";
+import PinDown from "../../Components/Buttons/PinDown";
+import PinStand from "../../Components/Buttons/PinStand";
 
 const Roll1 = ({ navigation }) => {
   // This toggles the state of the pins
   const [pinState, setPinState] = useState(
     Object.fromEntries(
-      Array.from({ length: 10 }, (_, index) => [
-        index + 1,
-        { aftRoll1: false, aftRoll2: false },
-      ])
+      Array.from({ length: 10 }, (_, index) => [index + 1, "initial"])
     )
   );
-  
+
   const togglePinState = (id) => {
-    const updatedPinState = {
-      ...pinState,
-      [id]: { ...pinState[id], aftRoll1: !pinState[id].aftRoll1 },
+    const pinType = {
+      initial: "standing",
+      standing: "initial",
+      down: "standing",
     };
-    setPinState(updatedPinState);
+
+    // Check if all pins down
+    // If all pins are down, call resetState
+    const allPinsDown = Object.values(pinState).every(
+      (state) => state === "down"
+    );
+    if (allPinsDown) {
+      resetState();
+    }
+
+    // Check if this pin standing and all other pins are in initial state
+    // If so, call setStrike
+    const thisStandingAndOthersInitial = Object.keys(pinState).every(
+      (pinId) => {
+        if (pinId === id) {
+          if (pinState[pinId] === "standing") {
+            return true;
+          }
+        } else {
+          return pinState[pinId] === "initial";
+        }
+      }
+    );
+    // Pls stay down
+    if (thisStandingAndOthersInitial) {
+      setStrike();
+      pinType.down = "down";
+    }
+
+    setPinState((prevState) => ({
+      ...prevState,
+      [id]: pinType[prevState[id]],
+    }));
   };
 
-  const setStrike = () => {};
+  const setStrike = () => {
+    setPinState(
+      Object.fromEntries(Object.keys(pinState).map((id) => [id, "down"]))
+    );
+  };
 
   const resetState = () => {
-    const updatedPinState = Object.fromEntries(
-      Object.entries(pinState).map(([id, pin]) => [
-        id,
-        { ...pin, aftRoll1: false },
-      ])
+    setPinState(
+      Object.fromEntries(Object.keys(pinState).map((id) => [id, "initial"]))
     );
-    setPinState(updatedPinState);
   };
 
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center", backgroundColor: "#36393f"}}>
-      {Object.entries(pinState).map(([id, pin]) => (
-        <Roll1Pins
-          key={id}
-          buttonTitle={id.toString()}
-          aftRoll1={pin.aftRoll1}
-          onPress={() => {
-            togglePinState(id);
-            // console.log(pinState);  // just some checking to see that state was changed.
-          }}
-        />
-      ))}
-      <TouchableOpacity>
+    <View
+      style={{
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "#36393f",
+      }}
+    >
+      {Object.entries(pinState).map(([id, pinType]) => {
+        switch (pinType) {
+          case "initial":
+            return (
+              <PinInit
+                key={id}
+                buttonTitle={id.toString()}
+                onPress={() => togglePinState(id)}
+              />
+            );
+          case "down":
+            return (
+              <PinDown
+                key={id}
+                buttonTitle={id.toString()}
+                onPress={() => togglePinState(id)}
+              />
+            );
+          case "standing":
+            return (
+              <PinStand
+                key={id}
+                buttonTitle={id.toString()}
+                onPress={() => togglePinState(id)}
+              />
+            );
+        }
+      })}
+      <TouchableOpacity onPress={() => setStrike()}>
         <Text>Strike</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => resetState()}>
