@@ -12,6 +12,7 @@ const SettingsScreen = ({ navigation }) => {
         navigation.replace("LoginScreen");
       })
       .catch((error) => alert(error.message));
+      console.log("Signed out with: ", auth.currentUser?.email);
   };
 
   return (
