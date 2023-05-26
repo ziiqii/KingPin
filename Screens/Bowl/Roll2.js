@@ -8,41 +8,44 @@ const Roll2 = ({ navigation, route }) => {
   const [newPinState, setNewPinState] = useState(pinState);
 
   const togglePinState = (id) => {
-    const updatedPinState = newPinState.map((pin) => {
-      if (pin.id === id) {
-        return {
-          ...pin,
-          aftRoll2: !pin.aftRoll2,
-        };
-      }
-      return pin;
-    });
+    const updatedPinState = {
+      ...newPinState,
+      [id]: { ...newPinState[id], aftRoll2: !newPinState[id].aftRoll2 },
+    };
     setNewPinState(updatedPinState);
+  };
+
+  const setSpare = () => {};
+
+  const resetState = () => {
+    setNewPinState(pinState);
   };
 
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      {newPinState.map((pin) => {
+      {Object.entries(newPinState).map(([id, pin]) => {
         if (!pin.aftRoll1) {
-          return <FadedPin key={pin.id} buttonTitle={pin.id.toString()} />;
+          return <FadedPin key={id} buttonTitle={id.toString()} />;
         } else {
           // Render regular Pin component for pins that are remaining
           return (
             <Roll2Pins
-              key={pin.id}
-              buttonTitle={pin.id.toString()}
+              key={id}
+              buttonTitle={id.toString()}
               aftRoll2={pin.aftRoll2}
               onPress={() => {
-                togglePinState(pin.id);
+                togglePinState(id);
                 // console.log(pinState); // just some checking to see that state was changed.
               }}
             />
           );
         }
       })}
-
       <TouchableOpacity>
         <Text>Spare</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => resetState()}>
+        <Text>Reset</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.replace("Roll1")}>
         <Text>Confirm</Text>

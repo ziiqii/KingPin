@@ -42,7 +42,6 @@ const BallsScreen = () => {
 
   return (
     <View>
-      <Text>Figma Balls</Text>
       <SearchBar placeholder="What's your ball?" platform="android" />
       <Button title="Add a new ball" onPress={toggleModal} />
       <FlatList
