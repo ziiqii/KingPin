@@ -34,7 +34,7 @@ const Roll1 = ({ navigation }) => {
   };
 
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+    <View style={{ flex: 1, alignItems: "center", justifyContent: "center", backgroundColor: "#36393f"}}>
       {Object.entries(pinState).map(([id, pin]) => (
         <Roll1Pins
           key={id}
