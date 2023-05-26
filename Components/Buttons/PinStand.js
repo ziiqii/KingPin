@@ -1,9 +1,11 @@
 import React from "react";
 import { Text, TouchableOpacity } from "react-native";
 
-const PinInitial = ({ buttonTitle, onPress, ...rest }) => {
+const PinStand = ({ buttonTitle, onPress, ...rest }) => {
   // Call the onPress function from the parent component
-  const handlePress = () => onPress();
+  const handlePress = () => {
+    onPress();
+  };
 
   return (
     <TouchableOpacity
@@ -14,16 +16,16 @@ const PinInitial = ({ buttonTitle, onPress, ...rest }) => {
         alignItems: "center",
         padding: 10,
         borderRadius: 100,
-        backgroundColor: "transparent",
-        borderWidth: 2,
-        borderColor: "#d9d9d9",
+        borderWidth: 3,
+        backgroundColor: "white",
+        borderColor: "#cd0000",
       }}
       onPress={handlePress}
       {...rest}
     >
-      <Text style={{fontSize: 20}}>hi</Text>
+      <Text style={{ fontSize: 30, color: "#000000" }}>{buttonTitle}</Text>
     </TouchableOpacity>
   );
 };
 
-export default PinInitial;
+export default PinStand;

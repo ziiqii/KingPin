@@ -4,7 +4,6 @@ import Roll1Pins from "../../Components/Buttons/Roll1Pins";
 
 const Roll1 = ({ navigation }) => {
   // This toggles the state of the pins
-  // aftRoll#: whether or not pin left standing after Roll#
   const [pinState, setPinState] = useState(
     Object.fromEntries(
       Array.from({ length: 10 }, (_, index) => [
@@ -13,6 +12,7 @@ const Roll1 = ({ navigation }) => {
       ])
     )
   );
+  
   const togglePinState = (id) => {
     const updatedPinState = {
       ...pinState,
