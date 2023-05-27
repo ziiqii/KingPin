@@ -36,6 +36,8 @@ Our Score Tracker aims to keep track of a user's game state by allowing users to
 
 Simply navigate to the Bowl tab and click on "Start Game" to begin. On the Roll1 screen, select the pins that are still remaining after the first throw, then press "Confirm". Select "Strike" if all pins were knocked down in the first throw.
 
+Upon pressing the pins, the initially white outlined pins with dark background will turn into pins with a red outline with a white background. Should a pin be pressed then pressed again, all pins will become faded out but are still interactable. Pressing the confirm button should bring you to the next screen, Roll2 where all pins are faded out. Upon pressing strike, all pins should become faded out.
+
 ## Complete README
 
 The complete README can be found here: [link](https://docs.google.com/document/d/1x04KUWEXq2gmz5gpR03JLWfmucEww30ZYyzqP7z3CyU/edit?pli=1)
