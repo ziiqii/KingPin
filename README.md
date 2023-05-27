@@ -45,7 +45,15 @@ Usage instructions:
 Expo:
 
 1. Install Expo Go on your mobile device
-2. Run "expo start" in the Visual Studio Code terminal while inside the KingPin folder
-3. A QR Code will appear in the terminal
-4. Open Expo Go and scan the QR Code
-5. KingPin will be loaded on your device.
+2. Run the following installations in the Visual Studio Code terminal while inside the KingPin folder:
+   - npm install @react-navigation/stack
+   - npx expo install react-native-gesture-handler
+   - npm install @react-navigation/bottom-tabs
+   - npm install @rneui/themed @rneui/base (for searchbar)
+   - npm i react-native-modal (for modal)
+   - npm install @react-native-async-storage/async-storage
+   - npm install react-native-reanimated-table
+3. Run "expo start" in the Visual Studio Code terminal while inside the KingPin folder
+4. A QR Code will appear in the terminal
+5. Open Expo Go and scan the QR Code
+6. KingPin will be loaded on your device.
