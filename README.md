@@ -24,7 +24,11 @@ Upon logging into the app, users will be brought the the homepage, where there a
 
 ### Ball Collection
 
-Our Ball Collection allows users to save the names of bowling balls in their accounts or remove unwanted ones. Future updates will fully implement the search feature, as well as the Ball Advisor feature where KingPin suggests which ball to use for an inputted lane condition.
+Our Ball Collection allows users to save the names of bowling balls in their accounts or remove unwanted ones.
+
+Navigate to the Balls tab by clicking on it in the bottom tab, and press "ADD A NEW BALL". A modal will appear, along with a text input. Type the name of the ball you want to save inside it, then press "Add Ball". You will be brought back to the Balls tab where you can see the name inputted previously. You may click on the "X" button below the item to delete it.
+
+Future updates will fully implement the search feature, as well as the Ball Advisor feature where KingPin suggests which ball to use for an inputted lane condition.
 
 ### Score Tracker
 
