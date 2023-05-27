@@ -1,0 +1,47 @@
+# KingPin
+
+This is the repository that holds the source code for the Orbital project KingPin, done by [@ZackTheManiac](https://github.com/ZackTheManiac) and [@ziiqii](https://github.com/ziiqii).
+
+## Motivation
+
+Ten-pin bowling is a popular indoor sport where players roll a ball down a wooden lane with the aim of knocking over the ten pins at the end of the lane. The game consists of ten frames, and the player with the highest total score at the end of the game is the winner. Each frame allows the player two chances to knock down as many pins as possible, with a strike achieved by knocking down all ten pins on the first roll. If the bowler fails to knock down all the pins in the first roll, they have a chance to spare on the second. Strategies such as targeting specific pins and adjusting the speed and angle of the ball can be used to improve one's score.
+
+Many novice bowlers have found memorising the spots to stand and aim unintuitive and laborious to commit to memory. Furthermore, it is inconvenient and time-consuming to input the layout of the pins when trying to clear a spare shot, which can disrupt the flow of a game.
+
+Moreover, it can be difficult to determine areas for improvement as players cannot track their stats during the game.
+
+Furthermore, with the presence of hundreds of different types of bowling balls on the market, bowlers often cannot remember the stats of each ball, and are unsure of which balls to use in their inventory.
+
+We wish to create an all-in-one bowling companion designed with both beginners and seasoned professionals in mind to provide users with everything they need to do well in bowling.
+
+## Currently implemented features
+
+### Account Creation and Login System
+
+To use KingPin, users will have to create a new account with a valid email and a password longer than 6 characters. They will then be able to log into our app and access more features. Our authentication includes login persistence, so once you have logged into the app once, the app will automatically bring users to the home page for subsequent app launches.
+
+Upon logging into the app, users will be brought the the homepage, where there are bottom tabs to navigate between the other features of our app. As of 27/5/2023, we have implemented the Ball Collection feature and part of the Score Tracker feature. They can be found under the "Balls" tab and "Bowl" tab respectively.
+
+### Ball Collection
+
+Our Ball Collection allows users to save the names of bowling balls in their accounts or remove unwanted ones. Future updates will fully implement the search feature, as well as the Ball Advisor feature where KingPin suggests which ball to use for an inputted lane condition.
+
+### Score Tracker
+
+Our Score Tracker aims to keep track of a user's game state by allowing users to tap on the provided pins on the screen to input game score.
+
+Simply navigate to the Bowl tab and click on "Start Game" to begin. On the Roll1 screen, select the pins that are still remaining after the first throw, then press "Confirm". Select "Strike" if all pins were knocked down in the first throw.
+
+## Complete README
+
+The complete README can be found here: [link](https://docs.google.com/document/d/1x04KUWEXq2gmz5gpR03JLWfmucEww30ZYyzqP7z3CyU/edit?pli=1)
+
+Usage instructions:
+
+Expo:
+
+1. Install Expo Go on your mobile device
+2. Run "expo start" in the Visual Studio Code terminal while inside the KingPin folder
+3. A QR Code will appear in the terminal
+4. Open Expo Go and scan the QR Code
+5. KingPin will be loaded on your device.
