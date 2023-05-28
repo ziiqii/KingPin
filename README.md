@@ -42,15 +42,16 @@ Upon pressing the pins, the initially white outlined pins with dark background w
 
 The complete README can be found here: [link](https://docs.google.com/document/d/1x04KUWEXq2gmz5gpR03JLWfmucEww30ZYyzqP7z3CyU/edit?pli=1)
 
-Download instructions:
+## Download instructions:
+Requirements:
+1. [Node.js LTS release](https://nodejs.org/en/)
+2. [Watchman](https://facebook.github.io/watchman/docs/install#buildinstall) for Linux / MacOS
+3. Expo Go app on your mobile device.
 
-1. Install the Expo Go app on your mobile device.
-2. Download the repo by clicking the green 'Code' button on the top right, and selecting 'Download ZIP'.
-   Alternatively, you can download the zip from this [link](https://github.com/ziiqii/KingPin/archive/refs/heads/main.zip).
-3. Extract the file to any destination, and within your IDE, open the 'KingPin-main' folder.
+Steps:
+1. Download the repo [here](https://github.com/ziiqii/KingPin/archive/refs/heads/main.zip).
+2. Extract the file to any destination, and within your IDE, open the 'KingPin-main' folder.
 3. Bring up your terminal to check that you are in the correct folder.
-4. Run 'npm install' in terminal to install the relevant dependencies.
-5. Run 'expo start' in  terminal.
+4. Run 'npx expo start' in terminal to install the relevant dependencies and start the server.
 6. A QR Code will appear in the terminal.
-7. Open Expo Go and scan the QR Code.
-8. KingPin will be loaded on your device.
+7. Open Expo Go and scan the QR Code to run the app.
