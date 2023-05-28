@@ -45,7 +45,6 @@ The complete README can be found here: [link](https://docs.google.com/document/d
 ## Download instructions:
 Requirements:
 1. [Node.js LTS release](https://nodejs.org/en/)
-2. [Watchman](https://facebook.github.io/watchman/docs/install#buildinstall) for Linux / MacOS
 3. Expo Go app on your mobile device.
 
 Steps:
