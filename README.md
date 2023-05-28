@@ -56,3 +56,7 @@ Steps:
 6. Run 'expo start' in terminal to start the server.
 7. A QR Code will appear in the terminal.
 8. Open your camera and scan the QR Code to run the app.
+
+If you have any issues, you can dm us on telegram:
+- @zhuyicheng
+- @ziiqii
