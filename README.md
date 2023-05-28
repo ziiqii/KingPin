@@ -47,7 +47,7 @@ Download instructions:
 1. Install the Expo Go app on your mobile device.
 2. Download the repo by clicking the green 'Code' button on the top right, and selecting 'Download ZIP'.
    Alternatively, you can download the zip from this [link](https://github.com/ziiqii/KingPin/archive/refs/heads/main.zip).
-3. Extract the file to any destination, and within your IDE, open the 'KingPin' folder.
+3. Extract the file to any destination, and within your IDE, open the 'KingPin-main' folder.
 3. Bring up your terminal to check that you are in the correct folder.
 4. Run 'npm install' in terminal to install the relevant dependencies.
 5. Run 'expo start' in  terminal.
