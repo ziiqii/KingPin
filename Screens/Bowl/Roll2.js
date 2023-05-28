@@ -38,6 +38,13 @@ const Roll2 = ({ navigation, route }) => {
     setNewPinState(pinState);
   };
 
+  const invertedTriangle = {
+    0: ["7", "8", "9", "10"],
+    1: ["4", "5", "6"],
+    2: ["2", "3"],
+    3: ["1"],
+  };
+
   return (
     <View
       style={{
@@ -47,44 +54,51 @@ const Roll2 = ({ navigation, route }) => {
         backgroundColor: "#36393f",
       }}
     >
-      {Object.entries(newPinState).map(([id, pinType]) => {
-        switch (pinType) {
-          case "initial":
-            return (
-              <PinInit
-                key={id}
-                buttonTitle={id.toString()}
-                onPress={() => togglePinState(id)}
-              />
-            );
-          case "down":
-            return (
-              <PinDown
-                key={id}
-                buttonTitle={id.toString()}
-                onPress={() => togglePinState(id)}
-              />
-            );
-          case "standing":
-            return (
-              <PinStand
-                key={id}
-                buttonTitle={id.toString()}
-                onPress={() => togglePinState(id)}
-              />
-            );
-          case "converted":
-            return (
-              <PinConv
-                key={id}
-                buttonTitle={id.toString()}
-                onPress={() => togglePinState(id)}
-              />
-            );
-          default:
-            return null; // Good practice, we can handle unrecognized pin types in future
-        }
-      })}
+      <View style={{ flexDirection: "column" }}>
+        {Object.entries(invertedTriangle).map(([rowIndex, pins]) => (
+          <View
+            key={rowIndex}
+            style={{
+              flexDirection: "row",
+              justifyContent: "center",
+              marginBottom: 16,
+            }}
+          >
+            {pins.map((pinId) => {
+              const pinType = newPinState[pinId];
+
+              switch (pinType) {
+                case "down":
+                  return (
+                    <PinDown
+                      key={pinId}
+                      buttonTitle={pinId}
+                      onPress={() => togglePinState(pinId)}
+                    />
+                  );
+                case "standing":
+                  return (
+                    <PinStand
+                      key={pinId}
+                      buttonTitle={pinId}
+                      onPress={() => togglePinState(pinId)}
+                    />
+                  );
+                case "converted":
+                  return (
+                    <PinConv
+                      key={pinId}
+                      buttonTitle={pinId}
+                      onPress={() => togglePinState(pinId)}
+                    />
+                  );
+                default:
+                  return null;
+              }
+            })}
+          </View>
+        ))}
+      </View>
       <TouchableOpacity onPress={() => setSpare()}>
         <Text>Spare</Text>
       </TouchableOpacity>
