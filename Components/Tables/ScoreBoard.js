@@ -39,7 +39,7 @@ const ScoreBoard = () => {
           textStyle={styles.tableTop.scoreText}
         />
       </Table>
-      <Text></Text>
+      
       <Table borderStyle={styles.border}>
         <Row
           data={framesBot}
