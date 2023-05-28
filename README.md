@@ -42,13 +42,15 @@ Upon pressing the pins, the initially white outlined pins with dark background w
 
 The complete README can be found here: [link](https://docs.google.com/document/d/1x04KUWEXq2gmz5gpR03JLWfmucEww30ZYyzqP7z3CyU/edit?pli=1)
 
-Usage instructions:
+Download instructions:
 
-Expo:
-
-1. Install Expo Go on your mobile device
-2. Run "npm install" in the Visual Studio Code terminal while inside the KingPin folder
-3. Run "expo start" in the Visual Studio Code terminal while inside the KingPin folder
-4. A QR Code will appear in the terminal
-5. Open Expo Go and scan the QR Code
-6. KingPin will be loaded on your device.
+1. Install the Expo Go app on your mobile device.
+2. Download the repo by clicking the green 'Code' button on the top right, and selecting 'Download ZIP'.
+   Alternatively, you can download the zip from this [link](https://github.com/ziiqii/KingPin/archive/refs/heads/main.zip).
+3. Extract the file to any destination, and within your IDE, open the 'KingPin' folder.
+3. Bring up your terminal to check that you are in the correct folder.
+4. Run 'npm install' in terminal to install the relevant dependencies.
+5. Run 'expo start' in  terminal.
+6. A QR Code will appear in the terminal.
+7. Open Expo Go and scan the QR Code.
+8. KingPin will be loaded on your device.
