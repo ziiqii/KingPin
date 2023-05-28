@@ -3,6 +3,7 @@ import { Text, View, TouchableOpacity } from "react-native";
 import PinInit from "../../Components/Buttons/PinInit";
 import PinDown from "../../Components/Buttons/PinDown";
 import PinStand from "../../Components/Buttons/PinStand";
+import ScoreBoard from "../../Components/Tables/ScoreBoard";
 
 const Roll1 = ({ navigation }) => {
   // Initialisation of pinState
@@ -68,8 +69,9 @@ const Roll1 = ({ navigation }) => {
   };
 
   const confirmPress = () => {
-    // Strike: nav to screen 1, ***not implemented yet
+    // TODO: On strike, write to db and nav to screen 2
 
+    // TODO: Write to db
     // Non strike: nav to screen 2, "initial" pins -> "down"
     const updatedPinState = Object.fromEntries(
       Object.entries(pinState).map(([id, state]) => [
@@ -89,14 +91,13 @@ const Roll1 = ({ navigation }) => {
   };
 
   return (
-    <View
-      style={{
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: "#36393f",
-      }}
-    >
+    <View>
+      {/* Scoreboard */}
+      <View style={{ alignItems: "stretch" }}>
+        <ScoreBoard />
+      </View>
+
+      {/* Pin Display */}
       <View style={{ flexDirection: "column" }}>
         {Object.entries(invertedTriangle).map(([rowIndex, pins]) => (
           <View
@@ -113,11 +114,11 @@ const Roll1 = ({ navigation }) => {
               switch (pinType) {
                 case "initial":
                   return (
-                      <PinInit
-                        key={pinId}
-                        buttonTitle={pinId}
-                        onPress={() => togglePinState(pinId)}
-                      />
+                    <PinInit
+                      key={pinId}
+                      buttonTitle={pinId}
+                      onPress={() => togglePinState(pinId)}
+                    />
                   );
                 case "down":
                   return (
@@ -142,15 +143,19 @@ const Roll1 = ({ navigation }) => {
           </View>
         ))}
       </View>
-      <TouchableOpacity onPress={() => setStrike()}>
-        <Text>Strike</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => resetState()}>
-        <Text>Reset</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => confirmPress()}>
-        <Text>Confirm</Text>
-      </TouchableOpacity>
+
+      {/* Buttons */}
+      <View style={{ alignItems: "center" }}>
+        <TouchableOpacity onPress={() => setStrike()}>
+          <Text>Strike</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => resetState()}>
+          <Text>Reset</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => confirmPress()}>
+          <Text>Confirm</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };

@@ -5,7 +5,6 @@ export default StyleSheet.create({
     padding: 10,
     paddingTop: 20,
     paddingBottom: 20,
-    backgroundColor: "#4d4d4d",
   },
   border: {
     borderWidth: 1,

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Text, View, TouchableOpacity } from "react-native";
 import PinDown from "../../Components/Buttons/PinDown";
-import PinInit from "../../Components/Buttons/PinInit";
 import PinStand from "../../Components/Buttons/PinStand";
 import PinConv from "../../Components/Buttons/PinConv";
+import ScoreBoard from "../../Components/Tables/ScoreBoard";
 
 const Roll2 = ({ navigation, route }) => {
   const { pinState } = route.params;
@@ -46,14 +46,13 @@ const Roll2 = ({ navigation, route }) => {
   };
 
   return (
-    <View
-      style={{
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: "#36393f",
-      }}
-    >
+    <View>
+      {/* Scoreboard */}
+      <View style={{ alignItems: "stretch" }}>
+        <ScoreBoard />
+      </View>
+
+      {/* Pin Display */}
       <View style={{ flexDirection: "column" }}>
         {Object.entries(invertedTriangle).map(([rowIndex, pins]) => (
           <View
@@ -61,7 +60,7 @@ const Roll2 = ({ navigation, route }) => {
             style={{
               flexDirection: "row",
               justifyContent: "center",
-              marginBottom: 16,
+              margin: -5,
             }}
           >
             {pins.map((pinId) => {
@@ -99,15 +98,19 @@ const Roll2 = ({ navigation, route }) => {
           </View>
         ))}
       </View>
-      <TouchableOpacity onPress={() => setSpare()}>
-        <Text>Spare</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => resetState()}>
-        <Text>Reset</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.replace("Roll1")}>
-        <Text>Confirm</Text>
-      </TouchableOpacity>
+
+      {/* Buttons */}
+      <View style={{ alignItems: "center" }}>
+        <TouchableOpacity onPress={() => setSpare()}>
+          <Text>Spare</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => resetState()}>
+          <Text>Reset</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.replace("Roll1")}>
+          <Text>Confirm</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
