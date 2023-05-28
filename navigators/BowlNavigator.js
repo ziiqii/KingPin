@@ -18,7 +18,13 @@ export default BowlNavigation = ({ navigation, route }) => {
   }, [navigation, route]);
 
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        contentStyle: {
+          backgroundColor: "#36393f",
+        },
+      }}
+    >
       <Stack.Screen name="BowlScreen" component={BowlScreen} />
       <Stack.Screen name="Roll1" component={Roll1} />
       <Stack.Screen name="Roll2" component={Roll2} />
