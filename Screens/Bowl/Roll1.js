@@ -81,6 +81,13 @@ const Roll1 = ({ navigation }) => {
     navigation.replace("Roll2", { pinState: updatedPinState });
   };
 
+  const invertedTriangle = {
+    0: ["7", "8", "9", "10"],
+    1: ["4", "5", "6"],
+    2: ["2", "3"],
+    3: ["1"],
+  };
+
   return (
     <View
       style={{
@@ -90,34 +97,51 @@ const Roll1 = ({ navigation }) => {
         backgroundColor: "#36393f",
       }}
     >
-      {Object.entries(pinState).map(([id, pinType]) => {
-        switch (pinType) {
-          case "initial":
-            return (
-              <PinInit
-                key={id}
-                buttonTitle={id.toString()}
-                onPress={() => togglePinState(id)}
-              />
-            );
-          case "down":
-            return (
-              <PinDown
-                key={id}
-                buttonTitle={id.toString()}
-                onPress={() => togglePinState(id)}
-              />
-            );
-          case "standing":
-            return (
-              <PinStand
-                key={id}
-                buttonTitle={id.toString()}
-                onPress={() => togglePinState(id)}
-              />
-            );
-        }
-      })}
+      <View style={{ flexDirection: "column" }}>
+        {Object.entries(invertedTriangle).map(([rowIndex, pins]) => (
+          <View
+            key={rowIndex}
+            style={{
+              flexDirection: "row",
+              justifyContent: "center",
+              margin: -5,
+            }}
+          >
+            {pins.map((pinId) => {
+              const pinType = pinState[pinId];
+
+              switch (pinType) {
+                case "initial":
+                  return (
+                      <PinInit
+                        key={pinId}
+                        buttonTitle={pinId}
+                        onPress={() => togglePinState(pinId)}
+                      />
+                  );
+                case "down":
+                  return (
+                    <PinDown
+                      key={pinId}
+                      buttonTitle={pinId}
+                      onPress={() => togglePinState(pinId)}
+                    />
+                  );
+                case "standing":
+                  return (
+                    <PinStand
+                      key={pinId}
+                      buttonTitle={pinId}
+                      onPress={() => togglePinState(pinId)}
+                    />
+                  );
+                default:
+                  return null;
+              }
+            })}
+          </View>
+        ))}
+      </View>
       <TouchableOpacity onPress={() => setStrike()}>
         <Text>Strike</Text>
       </TouchableOpacity>

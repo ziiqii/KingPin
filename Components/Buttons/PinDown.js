@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 
 const PinDown = ({ buttonTitle, onPress, ...rest }) => {
   // Call the onPress function from the parent component
@@ -8,23 +8,25 @@ const PinDown = ({ buttonTitle, onPress, ...rest }) => {
   };
 
   return (
-    <TouchableOpacity
-      style={{
-        width: 50,
-        height: 50,
-        justifyContent: "center",
-        alignItems: "center",
-        padding: 10,
-        borderRadius: 100,
-        borderWidth: 3,
-        backgroundColor: "transparent",
-        borderColor: "#737373",
-      }}
-      onPress={handlePress}
-      {...rest}
-    >
-      <Text style={{ fontSize: 20, color: "#a6a6a6" }}>{buttonTitle}</Text>
-    </TouchableOpacity>
+    <View style={{margin: 10}}>
+      <TouchableOpacity
+        style={{
+          width: 65,
+          height: 65,
+          justifyContent: "center",
+          alignItems: "center",
+          padding: 10,
+          borderRadius: 100,
+          borderWidth: 3,
+          backgroundColor: "transparent",
+          borderColor: "#737373",
+        }}
+        onPress={handlePress}
+        {...rest}
+      >
+        <Text style={{ fontSize: 25, color: "#a6a6a6" }}>{buttonTitle}</Text>
+      </TouchableOpacity>
+    </View>
   );
 };
 
