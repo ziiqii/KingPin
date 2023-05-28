@@ -116,6 +116,8 @@ const Roll1 = ({ navigation }) => {
                 onPress={() => togglePinState(id)}
               />
             );
+          default:
+            return null; // Good practice, we can handle unrecognized pin types in future
         }
       })}
       <TouchableOpacity onPress={() => setStrike()}>

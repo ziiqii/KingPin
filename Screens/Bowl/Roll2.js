@@ -22,7 +22,7 @@ const Roll2 = ({ navigation, route }) => {
       [id]: pinType[prevState[id]],
     }));
   };
-  
+
   const setSpare = () => {
     // "stanidng" pins -> "converted"
     const updatedPinState = Object.fromEntries(
@@ -81,6 +81,8 @@ const Roll2 = ({ navigation, route }) => {
                 onPress={() => togglePinState(id)}
               />
             );
+          default:
+            return null; // Good practice, we can handle unrecognized pin types in future
         }
       })}
       <TouchableOpacity onPress={() => setSpare()}>
