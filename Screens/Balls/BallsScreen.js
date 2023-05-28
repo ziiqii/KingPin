@@ -33,16 +33,15 @@ const BallsScreen = () => {
 
   const renderItem = ({ item }) => (
     <View>
-      <Text style={{ fontSize: 20 }}>
-        {item.name} (id: {item.id})
-      </Text>
+      <Text style={{ fontSize: 30, textAlign: "center" }}>{item.name}</Text>
       <DeleteBall id={item.id} />
+      <Text></Text>
     </View>
   );
 
   return (
     <View>
-      <SearchBar placeholder="What's your ball?" platform="android" />
+      <SearchBar placeholder="Figma balls?" platform="android" />
       <Button title="Add a new ball" onPress={toggleModal} />
       <FlatList
         data={balls}

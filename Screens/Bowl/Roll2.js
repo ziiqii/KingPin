@@ -102,13 +102,13 @@ const Roll2 = ({ navigation, route }) => {
       {/* Buttons */}
       <View style={{ alignItems: "center" }}>
         <TouchableOpacity onPress={() => setSpare()}>
-          <Text>Spare</Text>
+          <Text style={{fontSize: 16, color: "white"}}>Spare</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => resetState()}>
-          <Text>Reset</Text>
+          <Text style={{fontSize: 16, color: "white"}}>Reset</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.replace("Roll1")}>
-          <Text>Confirm</Text>
+          <Text style={{fontSize: 16, color: "white"}}>Confirm</Text>
         </TouchableOpacity>
       </View>
     </View>

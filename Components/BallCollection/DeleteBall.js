@@ -17,12 +17,12 @@ export default function DeleteBall({ id }) {
     } catch (error) {
       console.error("Error deleting ball:", error);
     }
-  }
+  };
 
   return (
     <View>
       <Pressable onPress={deleteBall}>
-        <Text>X</Text>
+        <Text style={{ fontSize: 20, textAlign: "center" }}>^Delete^</Text>
       </Pressable>
     </View>
   );
