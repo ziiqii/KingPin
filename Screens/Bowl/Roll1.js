@@ -5,13 +5,14 @@ import PinDown from "../../Components/Buttons/PinDown";
 import PinStand from "../../Components/Buttons/PinStand";
 
 const Roll1 = ({ navigation }) => {
-  // This toggles the state of the pins
+  // Initialisation of pinState
   const [pinState, setPinState] = useState(
     Object.fromEntries(
       Array.from({ length: 10 }, (_, index) => [index + 1, "initial"])
     )
   );
 
+  // This toggles the state of the pins
   const togglePinState = (id) => {
     const pinType = {
       initial: "standing",
@@ -47,6 +48,7 @@ const Roll1 = ({ navigation }) => {
       pinType.down = "down";
     }
 
+    // Finally set the pin state
     setPinState((prevState) => ({
       ...prevState,
       [id]: pinType[prevState[id]],
@@ -63,6 +65,20 @@ const Roll1 = ({ navigation }) => {
     setPinState(
       Object.fromEntries(Object.keys(pinState).map((id) => [id, "initial"]))
     );
+  };
+
+  const confirmPress = () => {
+    // Strike: nav to screen 1, ***not implemented yet
+
+    // Non strike: nav to screen 2, "initial" pins -> "down"
+    const updatedPinState = Object.fromEntries(
+      Object.entries(pinState).map(([id, state]) => [
+        id,
+        state === "initial" ? "down" : state,
+      ])
+    );
+
+    navigation.replace("Roll2", { pinState: updatedPinState });
   };
 
   return (
@@ -108,9 +124,7 @@ const Roll1 = ({ navigation }) => {
       <TouchableOpacity onPress={() => resetState()}>
         <Text>Reset</Text>
       </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => navigation.replace("Roll2", { pinState })}
-      >
+      <TouchableOpacity onPress={() => confirmPress()}>
         <Text>Confirm</Text>
       </TouchableOpacity>
     </View>
