@@ -53,7 +53,7 @@ Steps:
 2. Extract the file to any destination, and within your IDE, open the 'KingPin-main' folder.
 3. Bring up your terminal in your IDE to check that you are in the correct folder.
 4. Run 'npx expo' in terminal to install the relevant dependencies and start the server.
-// Run 'npm install' to install dependencies.
+// Run 'npm install expo' to install dependencies.
 // Run 'expo start' in terminal to start the server.
 5. A QR Code will appear in the terminal.
 6. Open your camera and scan the QR Code to run the app.
