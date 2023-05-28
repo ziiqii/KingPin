@@ -69,8 +69,9 @@ const Roll1 = ({ navigation }) => {
   };
 
   const confirmPress = () => {
-    // Strike: nav to screen 1, ***not implemented yet
+    // TODO: On strike, write to db and nav to screen 2
 
+    // TODO: Write to db
     // Non strike: nav to screen 2, "initial" pins -> "down"
     const updatedPinState = Object.fromEntries(
       Object.entries(pinState).map(([id, state]) => [
