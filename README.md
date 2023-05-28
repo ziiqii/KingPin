@@ -56,4 +56,4 @@ Steps:
 // Run 'npm install' to install dependencies.
 // Run 'expo start' in terminal to start the server.
 5. A QR Code will appear in the terminal.
-6. Open Expo Go and scan the QR Code to run the app.
+6. Open your camera and scan the QR Code to run the app.
