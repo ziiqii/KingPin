@@ -51,7 +51,7 @@ Requirements:
 Steps:
 1. Download the repo [here](https://github.com/ziiqii/KingPin/archive/refs/heads/main.zip).
 2. Extract the file to any destination, and within your IDE, open the 'KingPin-main' folder.
-3. Bring up your terminal to check that you are in the correct folder.
+3. Bring up your terminal in your IDE to check that you are in the correct folder.
 4. Run 'npx expo' in terminal to install the relevant dependencies and start the server.
 // Run 'npm install' to install dependencies.
 // Run 'expo start' in terminal to start the server.
