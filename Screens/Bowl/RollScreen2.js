@@ -5,7 +5,7 @@ import PinStand from "../../Components/Buttons/PinStand";
 import PinConv from "../../Components/Buttons/PinConv";
 import ScoreBoard from "../../Components/Tables/ScoreBoard";
 
-const Roll2 = ({ navigation, route }) => {
+const RollScreen2 = ({ navigation, route }) => {
   const { pinState } = route.params;
   const [newPinState, setNewPinState] = useState(pinState);
 
@@ -107,7 +107,7 @@ const Roll2 = ({ navigation, route }) => {
         <TouchableOpacity onPress={() => resetState()}>
           <Text style={{fontSize: 16, color: "white"}}>Reset</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.replace("Roll1")}>
+        <TouchableOpacity onPress={() => navigation.replace("RollScreen1")}>
           <Text style={{fontSize: 16, color: "white"}}>Confirm</Text>
         </TouchableOpacity>
       </View>
@@ -115,4 +115,4 @@ const Roll2 = ({ navigation, route }) => {
   );
 };
 
-export default Roll2;
+export default RollScreen2;

@@ -5,7 +5,7 @@ import PinDown from "../../Components/Buttons/PinDown";
 import PinStand from "../../Components/Buttons/PinStand";
 import ScoreBoard from "../../Components/Tables/ScoreBoard";
 
-const Roll1 = ({ navigation }) => {
+const RollScreen1 = ({ navigation }) => {
   // Initialisation of pinState
   const [pinState, setPinState] = useState(
     Object.fromEntries(
@@ -80,7 +80,7 @@ const Roll1 = ({ navigation }) => {
       ])
     );
 
-    navigation.replace("Roll2", { pinState: updatedPinState });
+    navigation.replace("RollScreen1", { pinState: updatedPinState });
   };
 
   const invertedTriangle = {
@@ -160,4 +160,4 @@ const Roll1 = ({ navigation }) => {
   );
 };
 
-export default Roll1;
+export default RollScreen1;
