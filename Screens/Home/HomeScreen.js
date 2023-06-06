@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { getAuth } from "firebase/auth";
 import { db } from "../../firebase";
 import { doc, setDoc, getDoc } from "firebase/firestore";
-import FeatureNavigation from "../../navigators/FeatureNavigator";
+import ScreenStack from "../../navigators/ScreenStack";
 
 const HomeScreen = () => {
   const auth = getAuth();
@@ -37,7 +37,7 @@ const HomeScreen = () => {
     }
   };
 
-  return <FeatureNavigation />;
+  return <ScreenStack />;
 };
 
 export default HomeScreen;
