@@ -23,12 +23,18 @@ const BallsScreen = () => {
     setLoading(true);
     const userRef = doc(db, "users", auth.currentUser?.email);
     const ballQuery = collection(userRef, "balls");
-    onSnapshot(ballQuery, (snapshot) => {
+    const unsubscribeBallListener = onSnapshot(ballQuery, (snapshot) => {
       let ballList = [];
       snapshot.docs.map((doc) => ballList.push({ ...doc.data(), id: doc.id }));
       setBalls(ballList);
       setLoading(false);
     });
+
+    // Cleanup function to unsubscribe from the listener when the component unmounts
+    return () => {
+      unsubscribeBallListener();
+    };
+
   }, []);
 
   const renderItem = ({ item }) => (
