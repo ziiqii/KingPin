@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Button, Text, View, FlatList } from "react-native";
 import { SearchBar } from "@rneui/themed";
 import Modal from "react-native-modal";
-import { doc, collection, onSnapshot } from "firebase/firestore";
+import { doc, collection, onSnapshot, query, orderBy } from "firebase/firestore";
 import { db } from "../../firebase";
 import CreateBall from "../../Components/BallCollection/CreateBall";
 import DeleteBall from "../../Components/BallCollection/DeleteBall";
@@ -21,8 +21,9 @@ const BallsScreen = () => {
 
   useEffect(() => {
     setLoading(true);
-    const userRef = doc(db, "users", auth.currentUser?.email);
-    const ballQuery = collection(userRef, "balls");
+    const userRef = doc(db, "users", auth.currentUser?.email); // Reference to this user's document
+    const ballRef = collection(userRef, "balls"); // Reference to this user's ball collection
+    const ballQuery = query(ballRef, orderBy("name", "asc")); // Sorted by name
     const unsubscribeBallListener = onSnapshot(ballQuery, (snapshot) => {
       let ballList = [];
       snapshot.docs.map((doc) => ballList.push({ ...doc.data(), id: doc.id }));
