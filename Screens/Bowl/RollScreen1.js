@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Text, View, TouchableOpacity } from "react-native";
 import PinInit from "../../Components/Buttons/PinInit";
 import PinDown from "../../Components/Buttons/PinDown";
@@ -62,6 +62,8 @@ const RollScreen1 = ({ navigation }) => {
     );
   };
 
+  // TODO: Consider adding a "Gutter" button -> all pins become standing
+
   const resetState = () => {
     setPinState(
       Object.fromEntries(Object.keys(pinState).map((id) => [id, "initial"]))
@@ -80,7 +82,7 @@ const RollScreen1 = ({ navigation }) => {
       ])
     );
 
-    navigation.replace("RollScreen1", { pinState: updatedPinState });
+    navigation.replace("RollScreen2", { pinState: updatedPinState });
   };
 
   const invertedTriangle = {
