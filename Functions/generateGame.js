@@ -5,7 +5,7 @@ A game is an array of 10 frame objects:
         - frameNum (number): 1 to 10, initialized as 1 to 10
         - type (string): "open" / "spare" / "strike", all initialized as null
         - remainOne (array of numbers): [], initialized as null
-        - remainOne (array of numbers): [], initialized as null
+        - remainTwo (array of numbers): [], initialized as null
         - score (number): 0 to 300, initialized as 0
 
 Simplified:
@@ -20,9 +20,10 @@ export default function generateGame() {
     const frame = {
       frameNum: i,
       type: null,
-      remainOne: [],
-      remainTwo: [],
-      score: 0,
+      score: null,
+      rollOne: null,
+      rollTwo: null,
+      rollThree: null,
     };
 
     frames.push(frame);
