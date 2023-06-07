@@ -6,8 +6,12 @@ import PinStand from "../../Components/Buttons/PinStand";
 import ScoreBoard from "../../Components/Tables/ScoreBoard";
 
 const RollScreen1 = ({ navigation }) => {
+  // const [typeState, setTypeState]... = "strike"
+  // const [frameState, setFrameState]... = [frameNum, rollNum]
+  
   // Initialisation of pinState
   const [pinState, setPinState] = useState(
+    // {1: "down", 2: "standing", ...,}
     Object.fromEntries(
       Array.from({ length: 10 }, (_, index) => [index + 1, "initial"])
     )

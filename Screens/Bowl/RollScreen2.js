@@ -24,7 +24,7 @@ const RollScreen2 = ({ navigation, route }) => {
   };
 
   const setSpare = () => {
-    // "stanidng" pins -> "converted"
+    // "standing" pins -> "converted"
     const updatedPinState = Object.fromEntries(
       Object.entries(pinState).map(([id, state]) => [
         id,
