@@ -5,16 +5,23 @@ import PinDown from "../../Components/Buttons/PinDown";
 import PinStand from "../../Components/Buttons/PinStand";
 import ScoreBoard from "../../Components/Tables/ScoreBoard";
 
-const RollScreen1 = ({ navigation }) => {
+const RollScreen1 = ({ navigation, route }) => {
   // const [typeState, setTypeState]... = "strike"
   // const [frameState, setFrameState]... = [frameNum, rollNum]
-  
+
+  const { frameNum, rollNum } = route.params;
+
   // Initialisation of pinState
   const [pinState, setPinState] = useState(
     // {1: "down", 2: "standing", ...,}
     Object.fromEntries(
       Array.from({ length: 10 }, (_, index) => [index + 1, "initial"])
     )
+  );
+
+  // Check if all pins down
+  const allPinsDown = Object.values(pinState).every(
+    (state) => state === "down"
   );
 
   // This toggles the state of the pins
@@ -25,11 +32,6 @@ const RollScreen1 = ({ navigation }) => {
       down: "standing",
     };
 
-    // Check if all pins down
-    // If all pins are down, call resetState
-    const allPinsDown = Object.values(pinState).every(
-      (state) => state === "down"
-    );
     if (allPinsDown) {
       resetState();
     }
@@ -86,7 +88,38 @@ const RollScreen1 = ({ navigation }) => {
       ])
     );
 
-    navigation.replace("RollScreen2", { pinState: updatedPinState });
+    // if there is a strike, then navigate back to RollScreen1 but with updated frameNum
+    if (allPinsDown) {
+      if (frameNum == 10) {
+        // frame 10 strike logic
+        navigation.replace("RollScreen1", {
+          frameNum: frameNum,
+          rollNum: rollNum + 1,
+        });
+        console.log("Current frame number:", frameNum);
+        console.log("Current roll number:", rollNum);
+      } else {
+        // frames 1 - 9 strike logic
+        navigation.replace("RollScreen1", {
+          frameNum: frameNum + 1,
+          rollNum: 1,
+        });
+        console.log("Current frame number:", frameNum);
+        console.log("Current roll number:", rollNum);
+      }
+    } else {
+      navigation.replace("RollScreen2", {
+        pinState: updatedPinState,
+        frameNum: frameNum,
+        rollNum: rollNum + 1,
+      });
+      console.log("Current frame number:", frameNum);
+      console.log("Current roll number:", rollNum);
+    }
+
+    if (rollNum == 3) {
+      navigation.replace("GameOverScreen");
+    }
   };
 
   const invertedTriangle = {
@@ -153,13 +186,13 @@ const RollScreen1 = ({ navigation }) => {
       {/* Buttons */}
       <View style={{ alignItems: "center" }}>
         <TouchableOpacity onPress={() => setStrike()}>
-          <Text style={{fontSize: 16, color: "white"}}>Strike</Text>
+          <Text style={{ fontSize: 16, color: "white" }}>Strike</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => resetState()}>
-          <Text style={{fontSize: 16, color: "white"}}>Reset</Text>
+          <Text style={{ fontSize: 16, color: "white" }}>Reset</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => confirmPress()}>
-          <Text style={{fontSize: 16, color: "white"}}>Confirm</Text>
+          <Text style={{ fontSize: 16, color: "white" }}>Confirm</Text>
         </TouchableOpacity>
       </View>
     </View>
