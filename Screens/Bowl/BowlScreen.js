@@ -3,6 +3,9 @@ import { View, Text, TouchableOpacity } from "react-native";
 import startGame from "../../Functions/startGame";
 
 const BowlScreen = ({ navigation }) => {
+  const frameNum = 1;
+  const rollNum = 1;
+
   return (
     <View
       style={{
@@ -16,7 +19,10 @@ const BowlScreen = ({ navigation }) => {
         onPress={() => {
           console.log("Game started");
           startGame();
-          navigation.navigate("RollScreen1");
+          navigation.navigate("RollScreen1", {
+            frameNum: frameNum,
+            rollNum: rollNum,
+          });
         }}
       >
         <Text style={{ fontSize: 20, color: "white" }}>Start Game</Text>
