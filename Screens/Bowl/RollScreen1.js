@@ -10,6 +10,7 @@ const RollScreen1 = ({ navigation, route }) => {
   // const [frameState, setFrameState]... = [frameNum, rollNum]
 
   const { frameNum, rollNum } = route.params;
+  const [isConfirmDisabled, setIsConfirmDisabled] = useState(true);
 
   // Initialisation of pinState
   const [pinState, setPinState] = useState(
@@ -55,6 +56,8 @@ const RollScreen1 = ({ navigation, route }) => {
       pinType.down = "down";
     }
 
+    setIsConfirmDisabled(false);
+
     // Finally set the pin state
     setPinState((prevState) => ({
       ...prevState,
@@ -66,6 +69,8 @@ const RollScreen1 = ({ navigation, route }) => {
     setPinState(
       Object.fromEntries(Object.keys(pinState).map((id) => [id, "down"]))
     );
+
+    setIsConfirmDisabled(false);
   };
 
   // TODO: Consider adding a "Gutter" button -> all pins become standing
@@ -191,7 +196,13 @@ const RollScreen1 = ({ navigation, route }) => {
         <TouchableOpacity onPress={() => resetState()}>
           <Text style={{ fontSize: 16, color: "white" }}>Reset</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => confirmPress()}>
+        <TouchableOpacity
+          onPress={() => confirmPress()}
+          disabled={isConfirmDisabled}
+          style={{
+            opacity: isConfirmDisabled ? 0.5 : 1,
+          }}
+        >
           <Text style={{ fontSize: 16, color: "white" }}>Confirm</Text>
         </TouchableOpacity>
       </View>

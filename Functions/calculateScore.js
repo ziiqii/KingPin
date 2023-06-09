@@ -83,9 +83,7 @@ score = all throws of frame ten
 */
 
 export default function calculateScore(game) {
-    const g = [...game]; // shallow copy
-  
+  const g = [...game]; // shallow copy
 
-    return g;
-  }
-  
+  return g;
+}
