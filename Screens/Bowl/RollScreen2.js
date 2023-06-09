@@ -64,7 +64,8 @@ const RollScreen2 = ({ navigation, route }) => {
       }
       return;
     }
-
+    console.log("Current frame number:", frameNum);
+    console.log("Current roll number:", rollNum);
     // frames 1 - 9 logic
     navigation.replace("RollScreen1", {
       frameNum: frameNum + 1,
