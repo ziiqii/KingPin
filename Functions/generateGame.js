@@ -14,7 +14,7 @@ Why not a game is array of 10 frames:
     - 10th frame has 3 rolls: [9, /, 5]
 */
 export default function generateGame() {
-  const frames = [];
+  const game = {};
 
   for (let i = 1; i <= 10; i++) {
     const frame = {
@@ -26,8 +26,8 @@ export default function generateGame() {
       rollThree: null,
     };
 
-    frames.push(frame);
+    game[i] = frame;
   }
 
-  return frames;
+  return game;
 }
