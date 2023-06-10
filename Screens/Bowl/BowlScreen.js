@@ -24,6 +24,9 @@ const BowlScreen = ({ navigation }) => {
             rollNum: rollNum,
           });
         }}
+        style={{
+          padding: 30,
+        }}
       >
         <Text style={{ fontSize: 20, color: "white" }}>Start Game</Text>
       </TouchableOpacity>

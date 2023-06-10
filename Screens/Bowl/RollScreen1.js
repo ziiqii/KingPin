@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Text, View, TouchableOpacity } from "react-native";
 import PinInit from "../../Components/Buttons/PinInit";
 import PinDown from "../../Components/Buttons/PinDown";
@@ -6,10 +6,10 @@ import PinStand from "../../Components/Buttons/PinStand";
 import ScoreBoard from "../../Components/Tables/ScoreBoard";
 
 const RollScreen1 = ({ navigation, route }) => {
-  // const [typeState, setTypeState]... = "strike"
-  // const [frameState, setFrameState]... = [frameNum, rollNum]
-
   const { frameNum, rollNum } = route.params;
+  const [frameState, setFrameState] = useState(null);
+
+  // for the fading out of confirm button before "strike" is pressed or pins are toggled
   const [isConfirmDisabled, setIsConfirmDisabled] = useState(true);
 
   // Initialisation of pinState
@@ -42,9 +42,7 @@ const RollScreen1 = ({ navigation, route }) => {
     const thisStandingAndOthersInitial = Object.keys(pinState).every(
       (pinId) => {
         if (pinId === id) {
-          if (pinState[pinId] === "standing") {
-            return true;
-          }
+          return pinState[pinId] === "standing";
         } else {
           return pinState[pinId] === "initial";
         }
@@ -53,24 +51,33 @@ const RollScreen1 = ({ navigation, route }) => {
     // Pls stay down
     if (thisStandingAndOthersInitial) {
       setStrike();
-      pinType.down = "down";
+      pinType.down = "down"; // not necessary if "down" pins are disabled
     }
-
-    setIsConfirmDisabled(false);
 
     // Finally set the pin state
     setPinState((prevState) => ({
       ...prevState,
       [id]: pinType[prevState[id]],
     }));
+
+    setIsConfirmDisabled(false);
+
+    // Lastly, check if all pins are down at the end. (typeFrame information)
+    // if (allPinsDown) {
+    //   setFrameState("strike");
+    // } else {
+    //   console.log("toggle null is called");
+    //   setFrameState(null);
+    // }
   };
 
   const setStrike = () => {
     setPinState(
       Object.fromEntries(Object.keys(pinState).map((id) => [id, "down"]))
     );
-
     setIsConfirmDisabled(false);
+    setFrameState("strike");
+    console.log("current frame state from setStrike: ", frameState);
   };
 
   // TODO: Consider adding a "Gutter" button -> all pins become standing
@@ -79,6 +86,9 @@ const RollScreen1 = ({ navigation, route }) => {
     setPinState(
       Object.fromEntries(Object.keys(pinState).map((id) => [id, "initial"]))
     );
+    setFrameState(null);
+    console.log("current frame state is: ", frameState);
+    setIsConfirmDisabled(true);
   };
 
   const confirmPress = () => {
@@ -100,6 +110,7 @@ const RollScreen1 = ({ navigation, route }) => {
         navigation.replace("RollScreen1", {
           frameNum: frameNum,
           rollNum: rollNum + 1,
+          frameState: frameState,
         });
         console.log("Current frame number:", frameNum);
         console.log("Current roll number:", rollNum);
@@ -108,6 +119,7 @@ const RollScreen1 = ({ navigation, route }) => {
         navigation.replace("RollScreen1", {
           frameNum: frameNum + 1,
           rollNum: 1,
+          frameState: frameState,
         });
         console.log("Current frame number:", frameNum);
         console.log("Current roll number:", rollNum);
@@ -117,6 +129,7 @@ const RollScreen1 = ({ navigation, route }) => {
         pinState: updatedPinState,
         frameNum: frameNum,
         rollNum: rollNum + 1,
+        frameState: frameState,
       });
       console.log("Current frame number:", frameNum);
       console.log("Current roll number:", rollNum);
@@ -125,6 +138,9 @@ const RollScreen1 = ({ navigation, route }) => {
     if (rollNum == 3) {
       navigation.replace("GameOverScreen");
     }
+
+    // just to check frame type information
+    console.log("frame type is: ", frameState);
   };
 
   const invertedTriangle = {
@@ -170,6 +186,7 @@ const RollScreen1 = ({ navigation, route }) => {
                       key={pinId}
                       buttonTitle={pinId}
                       onPress={() => togglePinState(pinId)}
+                      disabled={true}
                     />
                   );
                 case "standing":
@@ -190,21 +207,41 @@ const RollScreen1 = ({ navigation, route }) => {
 
       {/* Buttons */}
       <View style={{ alignItems: "center" }}>
-        <TouchableOpacity onPress={() => setStrike()}>
+        <TouchableOpacity
+          onPress={() => setStrike()}
+          style={{
+            padding: 10,
+          }}
+        >
           <Text style={{ fontSize: 16, color: "white" }}>Strike</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => resetState()}>
+        <TouchableOpacity
+          onPress={() => resetState()}
+          style={{
+            padding: 10,
+          }}
+        >
           <Text style={{ fontSize: 16, color: "white" }}>Reset</Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => confirmPress()}
           disabled={isConfirmDisabled}
           style={{
-            opacity: isConfirmDisabled ? 0.5 : 1,
+            opacity: isConfirmDisabled ? 0.3 : 1,
+            padding: 10,
           }}
         >
           <Text style={{ fontSize: 16, color: "white" }}>Confirm</Text>
         </TouchableOpacity>
+        <Text style={{ fontSize: 16, color: "white", marginTop: 20 }}>
+          Instructions:
+        </Text>
+        <Text style={{ fontSize: 16, color: "white" }}>
+          Select the pins that remain standing after your throw, or "Strike" if
+          all pins were knocked down. Select "Reset" to return all pins to the
+          original standing position. Once you are ready, select "Confirm" to
+          affirm your choice.
+        </Text>
       </View>
     </View>
   );
