@@ -4,9 +4,12 @@ import PinInit from "../../Components/Buttons/PinInit";
 import PinDown from "../../Components/Buttons/PinDown";
 import PinStand from "../../Components/Buttons/PinStand";
 import ScoreBoard from "../../Components/Tables/ScoreBoard";
+import updateGameAftRoll1 from "../../Functions/updateGameAftRoll1";
 
 const RollScreen1 = ({ navigation, route }) => {
-  const { frameNum, rollNum } = route.params;
+  // First, obtain the current game from the database
+
+  const { frameNum, rollNum, gameId } = route.params;
   const [frameState, setFrameState] = useState(null);
 
   // for the fading out of confirm button before "strike" is pressed or pins are toggled
@@ -61,14 +64,6 @@ const RollScreen1 = ({ navigation, route }) => {
     }));
 
     setIsConfirmDisabled(false);
-
-    // Lastly, check if all pins are down at the end. (typeFrame information)
-    // if (allPinsDown) {
-    //   setFrameState("strike");
-    // } else {
-    //   console.log("toggle null is called");
-    //   setFrameState(null);
-    // }
   };
 
   const setStrike = () => {
@@ -224,7 +219,10 @@ const RollScreen1 = ({ navigation, route }) => {
           <Text style={{ fontSize: 16, color: "white" }}>Reset</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => confirmPress()}
+          onPress={() => {
+            confirmPress();
+            updateGameAftRoll1(gameId, frameNum, rollNum, pinState);
+          }}
           disabled={isConfirmDisabled}
           style={{
             opacity: isConfirmDisabled ? 0.3 : 1,

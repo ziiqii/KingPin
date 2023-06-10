@@ -10,9 +10,6 @@ const RollScreen2 = ({ navigation, route }) => {
   const [newPinState, setNewPinState] = useState(pinState);
   const [newFrameState, setNewFrameState] = useState(frameState);
 
-  // test
-  const variable1 = 1;
-
   const togglePinState = (id) => {
     const pinType = {
       standing: "converted",
@@ -90,7 +87,6 @@ const RollScreen2 = ({ navigation, route }) => {
 
     if (!spare) {
       setNewFrameState("open");
-      console.log("condition fulfilled!");
     }
 
     // just to check frame type information
