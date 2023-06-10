@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Text, View, TouchableOpacity } from "react-native";
 import PinDown from "../../Components/Buttons/PinDown";
 import PinStand from "../../Components/Buttons/PinStand";
@@ -6,8 +6,12 @@ import PinConv from "../../Components/Buttons/PinConv";
 import ScoreBoard from "../../Components/Tables/ScoreBoard";
 
 const RollScreen2 = ({ navigation, route }) => {
-  const { frameNum, rollNum, pinState } = route.params;
+  const { frameNum, rollNum, pinState, frameState } = route.params;
   const [newPinState, setNewPinState] = useState(pinState);
+  const [newFrameState, setNewFrameState] = useState(frameState);
+
+  // test
+  const variable1 = 1;
 
   const togglePinState = (id) => {
     const pinType = {
@@ -15,6 +19,23 @@ const RollScreen2 = ({ navigation, route }) => {
       down: "down",
       converted: "standing",
     };
+
+    const thisStandingAndOthersConvertedOrDown = Object.keys(newPinState).every(
+      (pinId) => {
+        if (pinId === id) {
+          return newPinState[pinId] === "standing";
+        } else {
+          return (
+            newPinState[pinId] === "converted" || newPinState[pinId] === "down"
+          );
+        }
+      }
+    );
+
+    if (thisStandingAndOthersConvertedOrDown) {
+      setSpare();
+      pinType.converted = "converted";
+    }
 
     // Finally set the pin state
     setNewPinState((prevState) => ({
@@ -32,16 +53,18 @@ const RollScreen2 = ({ navigation, route }) => {
       ])
     );
     setNewPinState(updatedPinState);
+    setNewFrameState("spare");
+  };
+
+  const resetState = () => {
+    setNewPinState(pinState);
+    setNewFrameState(null);
   };
 
   //Check if all pins down OR converted (spare check)
   const spare = Object.values(newPinState).every(
     (state) => state === "down" || state === "converted"
   );
-
-  const resetState = () => {
-    setNewPinState(pinState);
-  };
 
   const confirmPress = () => {
     // frame 10 logic
@@ -64,6 +87,15 @@ const RollScreen2 = ({ navigation, route }) => {
       }
       return;
     }
+
+    if (!spare) {
+      setNewFrameState("open");
+      console.log("condition fulfilled!");
+    }
+
+    // just to check frame type information
+    console.log("frame type is: ", newFrameState);
+
     console.log("Current frame number:", frameNum);
     console.log("Current roll number:", rollNum);
     // frames 1 - 9 logic
@@ -108,6 +140,7 @@ const RollScreen2 = ({ navigation, route }) => {
                       key={pinId}
                       buttonTitle={pinId}
                       onPress={() => togglePinState(pinId)}
+                      disabled={true}
                     />
                   );
                 case "standing":
@@ -136,15 +169,39 @@ const RollScreen2 = ({ navigation, route }) => {
 
       {/* Buttons */}
       <View style={{ alignItems: "center" }}>
-        <TouchableOpacity onPress={() => setSpare()}>
+        <TouchableOpacity
+          onPress={() => setSpare()}
+          style={{
+            padding: 10,
+          }}
+        >
           <Text style={{ fontSize: 16, color: "white" }}>Spare</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => resetState()}>
+        <TouchableOpacity
+          onPress={() => resetState()}
+          style={{
+            padding: 10,
+          }}
+        >
           <Text style={{ fontSize: 16, color: "white" }}>Reset</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => confirmPress()}>
+        <TouchableOpacity
+          onPress={() => confirmPress()}
+          style={{
+            padding: 10,
+          }}
+        >
           <Text style={{ fontSize: 16, color: "white" }}>Confirm</Text>
         </TouchableOpacity>
+        <Text style={{ fontSize: 16, color: "white", marginTop: 20 }}>
+          Instructions:
+        </Text>
+        <Text style={{ fontSize: 16, color: "white" }}>
+          Select the pins that you have knocked down after your throw, or
+          "Spare" if all pins were knocked down. Select "Reset" to return
+          previously standing pins to the original standing position. Once you
+          are ready, select "Confirm" to affirm your choice.
+        </Text>
       </View>
     </View>
   );
