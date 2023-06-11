@@ -17,16 +17,32 @@ export default function generateGame() {
   const game = {};
 
   for (let i = 1; i <= 10; i++) {
-    const frame = {
-      frameNum: i,
-      type: null,
-      score: null,
-      rollOne: null,
-      rollTwo: null,
-      rollThree: null,
-    };
+    // frame 10 needs to have three frame types.
 
-    game[i] = frame;
+    const frame = {};
+
+    if (i === 10) {
+      const frame = {
+        frameNum: i,
+        type1: null,
+        type2: null,
+        type3: null,
+        score: null,
+        rollOne: null,
+        rollTwo: null,
+        rollThree: null,
+      };
+      game[i] = frame;
+    } else {
+      const frame = {
+        frameNum: i,
+        type: null,
+        score: null,
+        rollOne: null,
+        rollTwo: null,
+      };
+      game[i] = frame;
+    }
   }
 
   return game;

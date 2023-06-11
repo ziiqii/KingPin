@@ -32,49 +32,85 @@ export default async function updateGame(
     (state) => state === "converted"
   ).length;
 
-  // let points = null;
-  // if (frameNum != 10) {
-  //   if (rollNum == 2) {
-  //     points = convertedPinsCount;
-  //   } else {
-  //     points = 10 - standingPinsCount;
-  //   }
-  // } else {
-  //   // frameNum == 10
-
-  // }
-
-  let points = null;
-  if (rollNum == 2) {
-    points = convertedPinsCount;
-  } else {
-    points = 10 - standingPinsCount;
-  }
-
   // think about how to fit "score" into this
-  const score = 1;
+  const score = 999;
 
-  const rollNumber = (() => {
-    switch (rollNum) {
-      case 1:
-        return "rollOne";
-      case 2:
-        return "rollTwo";
-      case 3:
-        return "rollThree";
+  // seperating into frame 10 vs non-frame 10
+
+  // non-frame 10:
+  if (frameNum != 10) {
+    const rollNumber = rollNum == 1 ? "rollOne" : "rollTwo";
+
+    let points = null;
+    if (rollNum == 1) {
+      points = 10 - standingPinsCount;
+    } else {
+      points = convertedPinsCount;
     }
-  })();
 
-  const updatedFields = {
-    [`game.${frameNum}.${rollNumber}`]: points,
-    [`game.${frameNum}.score`]: score,
-    [`game.${frameNum}.type`]: frameState,
-  };
+    const updatedFields = {
+      [`game.${frameNum}.${rollNumber}`]: points,
+      [`game.${frameNum}.score`]: score,
+      [`game.${frameNum}.type`]: frameState,
+    };
 
-  try {
-    await updateDoc(gameRef, updatedFields);
-    console.log("Game updated successfully");
-  } catch (error) {
-    console.error("Error updating game:", error);
+    try {
+      await updateDoc(gameRef, updatedFields);
+      console.log("Game updated successfully");
+    } catch (error) {
+      console.error("Error updating game:", error);
+    }
+  } else {
+    // frame 10:
+    const rollNumber = (() => {
+      switch (rollNum) {
+        case 1:
+          return "rollOne";
+        case 2:
+          return "rollTwo";
+        case 3:
+          return "rollThree";
+      }
+    })();
+
+    const typeNumber = (() => {
+      switch (rollNum) {
+        case 1:
+          return "type1";
+        case 2:
+          return "type2";
+        case 3:
+          return "type3";
+      }
+    })();
+
+    let points = null;
+    if (rollNum == 1) {
+      points = 10 - standingPinsCount;
+    } else {
+      if (frameState == null || frameState == "strike") {
+        points = 10 - standingPinsCount;
+      } else {
+        points = convertedPinsCount;
+      }
+    }
+
+    const updatedFields = {
+      [`game.${frameNum}.${rollNumber}`]: points,
+      [`game.${frameNum}.score`]: score,
+    };
+
+    if (rollNum == 3 && frameState == null) {
+      updatedFields[`game.${frameNum}.${typeNumber}`] = "open";
+    } else {
+      updatedFields[`game.${frameNum}.${typeNumber}`] = frameState;
+    }
+
+    try {
+      await updateDoc(gameRef, updatedFields);
+      console.log("Game updated successfully");
+    } catch (error) {
+      console.error("Error updating game:", error);
+    }
   }
 }
