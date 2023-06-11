@@ -5,6 +5,7 @@ import PinStand from "../../Components/Buttons/PinStand";
 import PinConv from "../../Components/Buttons/PinConv";
 import ScoreBoard from "../../Components/Tables/ScoreBoard";
 import updateGame from "../../Functions/updateGame";
+import updateScore from "../../Functions/updateScore";
 
 const RollScreen2 = ({ navigation, route }) => {
   const { frameNum, rollNum, pinState, gameId } = route.params;
@@ -187,6 +188,7 @@ const RollScreen2 = ({ navigation, route }) => {
           onPress={() => {
             confirmPress();
             updateGame(gameId, frameNum, rollNum, newPinState, newFrameState);
+            updateScore(gameId, frameNum);
           }}
           style={{
             padding: 10,
