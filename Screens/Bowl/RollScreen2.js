@@ -52,8 +52,6 @@ const RollScreen2 = ({ navigation, route }) => {
       ...prevState,
       [id]: pinType[prevState[id]],
     }));
-
-    console.log("toggle pin state :", newFrameState);
   };
 
   const setSpare = () => {
@@ -66,7 +64,6 @@ const RollScreen2 = ({ navigation, route }) => {
     );
     setNewPinState(updatedPinState);
     setNewFrameState("spare");
-    console.log("set spare state: ", newFrameState);
   };
 
   const resetState = () => {
@@ -80,14 +77,6 @@ const RollScreen2 = ({ navigation, route }) => {
   );
 
   const confirmPress = () => {
-    // if (!spare) {
-    //   console.log("condition was fulfilled, it is open");
-    //   setNewFrameState("CHANGE TYPE");
-    //   console.log("REACHED END");
-    // } else {
-    //   console.log("condition was not fulfilled, it was a spare");
-    // }
-
     // frame 10 logic
     if (frameNum == 10) {
       if (rollNum == 2 && spare) {
@@ -97,24 +86,15 @@ const RollScreen2 = ({ navigation, route }) => {
           rollNum: 3,
           gameId: gameId,
         });
-        console.log("Current frame number:", frameNum);
-        console.log("Current roll number:", rollNum);
       } else if (rollNum == 2 && !spare) {
         // rollNum == 2 but open
         navigation.replace("GameOverScreen");
       } else {
         // rollNum == 3 (e.g. X, 6, / or X, 6, 3)
-        console.log("rollNum == 3, doesn't matter spare or not");
         navigation.replace("GameOverScreen");
       }
       return;
     }
-
-    // just to check frame type information
-    console.log("frame type is: ", newFrameState);
-
-    console.log("Current frame number:", frameNum);
-    console.log("Current roll number:", rollNum);
     // frames 1 - 9 logic
     navigation.replace("RollScreen1", {
       frameNum: frameNum + 1,

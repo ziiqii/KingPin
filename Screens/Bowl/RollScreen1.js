@@ -103,32 +103,23 @@ const RollScreen1 = ({ navigation, route }) => {
         navigation.replace("RollScreen1", {
           frameNum: frameNum,
           rollNum: rollNum + 1,
-          frameState: frameState,
           gameId: gameId,
         });
-        console.log("Current frame number:", frameNum);
-        console.log("Current roll number:", rollNum);
       } else {
         // frames 1 - 9 strike logic
         navigation.replace("RollScreen1", {
           frameNum: frameNum + 1,
           rollNum: 1,
-          frameState: frameState,
           gameId: gameId,
         });
-        console.log("Current frame number:", frameNum);
-        console.log("Current roll number:", rollNum);
       }
     } else {
       navigation.replace("RollScreen2", {
         pinState: updatedPinState,
         frameNum: frameNum,
         rollNum: rollNum + 1,
-        frameState: frameState,
         gameId: gameId,
       });
-      console.log("Current frame number:", frameNum);
-      console.log("Current roll number:", rollNum);
     }
 
     if (rollNum == 3) {
