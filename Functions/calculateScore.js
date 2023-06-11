@@ -1,22 +1,22 @@
-export default function calculateScore(game, frameNum) {
+export default function calculateScore(game) {
   const frames = { ...game };
   let prevScore = 0;
 
-  for (let currFrameNum = 1; currFrameNum <= frameNum; currFrameNum++) {
-    const frame = frames[currFrameNum];
+  for (let frameNum = 1; frameNum <= 10; frameNum++) {
+    const frame = frames[frameNum];
     let score;
 
-    if (currFrameNum === 10) {
+    if (frameNum === 10) {
       score = calculateFrameTen(frame);
     } else {
       if (frame.type === "strike") {
         score = calculateStrike(
           frame,
-          frames[currFrameNum + 1],
-          frames[currFrameNum + 2]
+          frames[frameNum + 1],
+          frames[frameNum + 2]
         );
       } else if (frame.type === "spare") {
-        score = calculateSpare(frame, frames[currFrameNum + 1]);
+        score = calculateSpare(frame, frames[frameNum + 1]);
       } else {
         score = calculateOpenFrame(frame);
       }
@@ -26,7 +26,7 @@ export default function calculateScore(game, frameNum) {
     prevScore = frame.score;
   }
 
-  return frames[frameNum].score;
+  return frames;
 }
 
 function calculateStrike(frame, nextFrame, nextNextFrame) {
@@ -49,7 +49,7 @@ function calculateStrike(frame, nextFrame, nextNextFrame) {
   }
 }
 
-function calculateSpare(frame, nextFrame) {
+function calculateSpare(nextFrame) {
   if (nextFrame.rollOne === 0) {
     return 10;
   } else if (nextFrame.rollOne === 10) {

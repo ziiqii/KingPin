@@ -38,7 +38,7 @@ export default async function updateScore(gameId, frameNum) {
       // whole game with all frames
       const game = gameDoc.data().game;
 
-      const currScore = calculateScore(game, frameNum);
+      const currScore = calculateScore(game);
       console.log(currScore);
     } else {
       console.log("No such doc");
