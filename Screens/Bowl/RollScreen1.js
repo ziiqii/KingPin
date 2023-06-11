@@ -4,7 +4,7 @@ import PinInit from "../../Components/Buttons/PinInit";
 import PinDown from "../../Components/Buttons/PinDown";
 import PinStand from "../../Components/Buttons/PinStand";
 import ScoreBoard from "../../Components/Tables/ScoreBoard";
-import updateGameAftRoll1 from "../../Functions/updateGameAftRoll1";
+import updateGame from "../../Functions/updateGame";
 
 const RollScreen1 = ({ navigation, route }) => {
   // First, obtain the current game from the database
@@ -72,7 +72,6 @@ const RollScreen1 = ({ navigation, route }) => {
     );
     setIsConfirmDisabled(false);
     setFrameState("strike");
-    console.log("current frame state from setStrike: ", frameState);
   };
 
   // TODO: Consider adding a "Gutter" button -> all pins become standing
@@ -82,7 +81,6 @@ const RollScreen1 = ({ navigation, route }) => {
       Object.fromEntries(Object.keys(pinState).map((id) => [id, "initial"]))
     );
     setFrameState(null);
-    console.log("current frame state is: ", frameState);
     setIsConfirmDisabled(true);
   };
 
@@ -106,6 +104,7 @@ const RollScreen1 = ({ navigation, route }) => {
           frameNum: frameNum,
           rollNum: rollNum + 1,
           frameState: frameState,
+          gameId: gameId,
         });
         console.log("Current frame number:", frameNum);
         console.log("Current roll number:", rollNum);
@@ -115,6 +114,7 @@ const RollScreen1 = ({ navigation, route }) => {
           frameNum: frameNum + 1,
           rollNum: 1,
           frameState: frameState,
+          gameId: gameId,
         });
         console.log("Current frame number:", frameNum);
         console.log("Current roll number:", rollNum);
@@ -125,6 +125,7 @@ const RollScreen1 = ({ navigation, route }) => {
         frameNum: frameNum,
         rollNum: rollNum + 1,
         frameState: frameState,
+        gameId: gameId,
       });
       console.log("Current frame number:", frameNum);
       console.log("Current roll number:", rollNum);
@@ -133,9 +134,6 @@ const RollScreen1 = ({ navigation, route }) => {
     if (rollNum == 3) {
       navigation.replace("GameOverScreen");
     }
-
-    // just to check frame type information
-    console.log("frame type is: ", frameState);
   };
 
   const invertedTriangle = {
@@ -221,7 +219,7 @@ const RollScreen1 = ({ navigation, route }) => {
         <TouchableOpacity
           onPress={() => {
             confirmPress();
-            updateGameAftRoll1(gameId, frameNum, rollNum, pinState);
+            updateGame(gameId, frameNum, rollNum, pinState, frameState);
           }}
           disabled={isConfirmDisabled}
           style={{

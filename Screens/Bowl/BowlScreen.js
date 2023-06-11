@@ -9,7 +9,6 @@ const BowlScreen = ({ navigation }) => {
   const handleStartGame = async () => {
     console.log("Game started");
     const gameId = await startGame(); // Wait for the startGame() function to complete and get the gameId
-    console.log("This is the gameId!: ", gameId);
     navigation.navigate("RollScreen1", {
       frameNum: frameNum,
       rollNum: rollNum,

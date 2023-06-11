@@ -4,11 +4,12 @@ import PinDown from "../../Components/Buttons/PinDown";
 import PinStand from "../../Components/Buttons/PinStand";
 import PinConv from "../../Components/Buttons/PinConv";
 import ScoreBoard from "../../Components/Tables/ScoreBoard";
+import updateGame from "../../Functions/updateGame";
 
 const RollScreen2 = ({ navigation, route }) => {
-  const { frameNum, rollNum, pinState, frameState } = route.params;
+  const { frameNum, rollNum, pinState, gameId } = route.params;
   const [newPinState, setNewPinState] = useState(pinState);
-  const [newFrameState, setNewFrameState] = useState(frameState);
+  const [newFrameState, setNewFrameState] = useState("open");
 
   const togglePinState = (id) => {
     const pinType = {
@@ -29,6 +30,18 @@ const RollScreen2 = ({ navigation, route }) => {
       }
     );
 
+    const thisConverted = Object.keys(newPinState).every((pinId) => {
+      if (pinId === id) {
+        return newPinState[pinId] === "converted";
+      } else {
+        return true;
+      }
+    });
+
+    if (thisConverted) {
+      setNewFrameState("open");
+    }
+
     if (thisStandingAndOthersConvertedOrDown) {
       setSpare();
       pinType.converted = "converted";
@@ -39,6 +52,8 @@ const RollScreen2 = ({ navigation, route }) => {
       ...prevState,
       [id]: pinType[prevState[id]],
     }));
+
+    console.log("toggle pin state :", newFrameState);
   };
 
   const setSpare = () => {
@@ -51,6 +66,7 @@ const RollScreen2 = ({ navigation, route }) => {
     );
     setNewPinState(updatedPinState);
     setNewFrameState("spare");
+    console.log("set spare state: ", newFrameState);
   };
 
   const resetState = () => {
@@ -64,6 +80,14 @@ const RollScreen2 = ({ navigation, route }) => {
   );
 
   const confirmPress = () => {
+    // if (!spare) {
+    //   console.log("condition was fulfilled, it is open");
+    //   setNewFrameState("CHANGE TYPE");
+    //   console.log("REACHED END");
+    // } else {
+    //   console.log("condition was not fulfilled, it was a spare");
+    // }
+
     // frame 10 logic
     if (frameNum == 10) {
       if (rollNum == 2 && spare) {
@@ -71,6 +95,7 @@ const RollScreen2 = ({ navigation, route }) => {
         navigation.replace("RollScreen1", {
           frameNum: frameNum,
           rollNum: 3,
+          gameId: gameId,
         });
         console.log("Current frame number:", frameNum);
         console.log("Current roll number:", rollNum);
@@ -85,10 +110,6 @@ const RollScreen2 = ({ navigation, route }) => {
       return;
     }
 
-    if (!spare) {
-      setNewFrameState("open");
-    }
-
     // just to check frame type information
     console.log("frame type is: ", newFrameState);
 
@@ -98,6 +119,7 @@ const RollScreen2 = ({ navigation, route }) => {
     navigation.replace("RollScreen1", {
       frameNum: frameNum + 1,
       rollNum: 1,
+      gameId: gameId,
     });
   };
 
@@ -182,7 +204,10 @@ const RollScreen2 = ({ navigation, route }) => {
           <Text style={{ fontSize: 16, color: "white" }}>Reset</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => confirmPress()}
+          onPress={() => {
+            confirmPress();
+            updateGame(gameId, frameNum, rollNum, newPinState, newFrameState);
+          }}
           style={{
             padding: 10,
           }}
