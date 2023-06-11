@@ -1,6 +1,7 @@
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import { getAuth } from "firebase/auth";
+import updateScore from "./updateScore";
 
 /*
 Takes in a game, frame, roll, and an array of pins.
