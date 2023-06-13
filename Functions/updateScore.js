@@ -2,6 +2,7 @@ import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import { getAuth } from "firebase/auth";
 import calculateScore from "./calculateScore";
+import { forScaleFromCenterAndroid } from "@react-navigation/stack/lib/typescript/src/TransitionConfigs/CardStyleInterpolators";
 
 // after updating the db state, we will need to fetch the game state from the db
 // to use in calculating the score.
@@ -25,6 +26,12 @@ export default async function updateScore(gameId, frameNum) {
   const auth = getAuth();
   const userRef = doc(db, "users", auth.currentUser?.email);
   const gameRef = doc(userRef, "games", gameId);
+
+  // test
+
+  if (frameNum == 10) {
+    console.log("frame10");
+  }
 
   try {
     // Get the game document
