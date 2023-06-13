@@ -1,7 +1,7 @@
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import { getAuth } from "firebase/auth";
-import updateScore from "./updateScore";
+import updateAndUpdateScore from "./calculateAndUpdateScore";
 
 /*
 Takes in a game, frame, roll, and an array of pins.
@@ -51,7 +51,7 @@ export default async function updateGame(
 
     const updatedFields = {
       [`game.${frameNum}.${rollNumber}`]: points,
-      [`game.${frameNum}.score`]: score,
+      // [`game.${frameNum}.score`]: score,
       [`game.${frameNum}.type`]: frameState,
     };
 
