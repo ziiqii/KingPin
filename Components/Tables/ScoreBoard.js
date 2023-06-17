@@ -1,5 +1,5 @@
+import React, { useState, useEffect } from "react";
 import { Text, View } from "react-native";
-import React from "react";
 import {
   Table,
   TableWrapper,
@@ -11,7 +11,35 @@ import {
 } from "react-native-reanimated-table";
 import styles from "./ScoreBoard.style";
 
-const ScoreBoard = () => {
+import { db } from "../../firebase";
+import { getAuth } from "firebase/auth";
+import {
+  doc,
+  collection,
+  onSnapshot,
+  query,
+  orderBy,
+  where,
+} from "firebase/firestore";
+
+const ScoreBoard = (props) => {
+  useEffect(() => {
+    const auth = getAuth();
+    const userDoc = doc(db, "users", auth.currentUser?.email);
+    const gameDoc = doc(userDoc, "games", props.Id);
+    const gameQuery = query(gameDoc);
+
+    const unsubscribeGameListener = onSnapshot(gameQuery, (doc) => {
+      console.log("Current data: ", doc.data());
+      // Function to parse a game (10 frames) into 6 arrays to be displayed below
+      // parsedGame is an array of the 6 arrays
+      // parsedGame = function(doc.data())
+      // -> call parsedGame[0], parsedGame[1] etc
+    });
+    // Cleanup listener
+    return () => unsubscribeGameListener();
+  }, []);
+
   const framesTop = ["1", "2", "3", "4", "5", "6"];
   const rollsTop = ["2", "5", "8", "1", "5", "/", "X", "", "8", "/", "2", "5"];
   const scoresTop = ["7", "16", "36", "56", "68", "75"];
@@ -39,7 +67,7 @@ const ScoreBoard = () => {
           textStyle={styles.tableTop.scoreText}
         />
       </Table>
-      
+
       <Table borderStyle={styles.border}>
         <Row
           data={framesBot}
@@ -60,6 +88,9 @@ const ScoreBoard = () => {
           textStyle={styles.tableBot.scoreText}
         />
       </Table>
+      <View>
+        <Text>{props.Id}</Text>
+      </View>
     </View>
   );
 };
