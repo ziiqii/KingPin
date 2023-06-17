@@ -12,8 +12,11 @@ const RollScreen1 = ({ navigation, route }) => {
   const { frameNum, rollNum, gameId } = route.params;
   const [frameState, setFrameState] = useState(null);
 
-  // for the fading out of confirm button before "strike" is pressed or pins are toggled
+  // for the fading out of "confirm" button before "strike" is pressed or pins are toggled
   const [isConfirmDisabled, setIsConfirmDisabled] = useState(true);
+
+  // for the fading out of "strike" button once it has been pressed once
+  const [isStrikeDisabled, setIsStrikeDisabled] = useState(false);
 
   // Initialisation of pinState
   const [pinState, setPinState] = useState(
@@ -192,15 +195,23 @@ const RollScreen1 = ({ navigation, route }) => {
       {/* Buttons */}
       <View style={{ alignItems: "center" }}>
         <TouchableOpacity
-          onPress={() => setStrike()}
+          onPress={() => {
+            setStrike();
+            setIsStrikeDisabled(true);
+          }}
+          disabled={isStrikeDisabled}
           style={{
+            opacity: isStrikeDisabled ? 0.3 : 1,
             padding: 10,
           }}
         >
           <Text style={{ fontSize: 16, color: "white" }}>Strike</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => resetState()}
+          onPress={() => {
+            resetState();
+            setIsStrikeDisabled(false);
+          }}
           style={{
             padding: 10,
           }}
