@@ -1,4 +1,4 @@
-import { doc, updateDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import { getAuth } from "firebase/auth";
 import calculateAndUpdateScore from "./calculateAndUpdateScore";
@@ -111,17 +111,34 @@ export default async function updateGame(
   }
 
   // determine whether to run calculateAndUpdateScore or not:
+  // we will need information of the previous roll to decide whether
+  // to calculate score or not in frame 10
+
   if (frameNum != 10) {
     if (rollNum == 2 || frameState == "strike") {
-      calculateAndUpdateScore(gameId, rollNum);
+      calculateAndUpdateScore(gameId);
     }
   } else {
     // frame 10, score is never calculated on roll1
-    // only 2 cases: either calculate after second roll if second roll was open,
+    // only 2 cases: either calculate after second roll if second roll was open and first roll was NOT strike,
     // or calculate after third roll.
 
-    if ((rollNum == 2 && frameState == "open") || rollNum == 3) {
-      calculateAndUpdateScore(gameId, rollNum);
+    try {
+      // Get the game document
+      const gameDoc = await getDoc(gameRef);
+      if (gameDoc.exists) {
+        const firstRollStrike = gameDoc.data().game[10]["type1"] == "strike";
+        if (
+          (rollNum == 2 && frameState == "open" && !firstRollStrike) ||
+          rollNum == 3
+        ) {
+          calculateAndUpdateScore(gameId);
+        }
+      } else {
+        console.log("No such doc");
+      }
+    } catch (error) {
+      console.error("Error obtaining game fields in updateGame:", error);
     }
   }
 }

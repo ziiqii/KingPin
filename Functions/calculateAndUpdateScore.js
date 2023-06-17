@@ -20,11 +20,7 @@ import { getAuth } from "firebase/auth";
   */
 // game , frameNum
 
-export default async function calculateAndUpdateScore(gameId, currentRoll) {
-  // if (currentRoll != 2) {
-  //   return;
-  // }
-
+export default async function calculateAndUpdateScore(gameId) {
   const auth = getAuth();
   const userRef = doc(db, "users", auth.currentUser?.email);
   const gameRef = doc(userRef, "games", gameId);
@@ -37,8 +33,6 @@ export default async function calculateAndUpdateScore(gameId, currentRoll) {
       //   "This is the data I'm trying to get :",
       //   gameDoc.data().game[frameNum]["rollOne"]
       // );
-
-      console.log("current full game :", gameDoc.data().game);
 
       // whole game with all frames
       const game = gameDoc.data().game;
