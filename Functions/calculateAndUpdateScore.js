@@ -45,6 +45,19 @@ export default async function calculateAndUpdateScore(gameId) {
         const frame = frames[frameNum];
         let score;
 
+        // This if else block is the logic for not updating/displaying the score
+        // for frames that have not been reached yet.
+        if (frameNum != 10) {
+          if (frame["pinState"] == null) {
+            return;
+          }
+        } else {
+          // frame 10
+          if (frame["rollOne"] == null) {
+            return;
+          }
+        }
+
         if (frameNum === 10) {
           score = calculateFrameTen(frame);
         } else {
