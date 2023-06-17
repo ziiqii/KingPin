@@ -16,7 +16,7 @@ export default async function updateGame(
   gameId, // to get to the document to update
   frameNum, // to find out which specific frame to update in the game
   rollNum, // to find out where to place the points of the roll
-  pinArray, // to get the points of that roll
+  pinState, // to get the points of that roll
   frameState // to get the "type" of the frame
 ) {
   const auth = getAuth();
@@ -24,12 +24,12 @@ export default async function updateGame(
   const gameRef = doc(userRef, "games", gameId);
 
   // number of pins still standing
-  const standingPinsCount = Object.values(pinArray).filter(
+  const standingPinsCount = Object.values(pinState).filter(
     (state) => state === "standing"
   ).length;
 
   // number of pins that were converted
-  const convertedPinsCount = Object.values(pinArray).filter(
+  const convertedPinsCount = Object.values(pinState).filter(
     (state) => state === "converted"
   ).length;
 
@@ -49,8 +49,13 @@ export default async function updateGame(
     const updatedFields = {
       [`game.${frameNum}.${rollNumber}`]: points,
       [`game.${frameNum}.type`]: frameState,
+      [`game.${frameNum}.pinState`]:
+        rollNum == 2 || (rollNum == 1 && frameState == "strike")
+          ? pinState
+          : null,
     };
 
+    // finally updating the database
     try {
       await updateDoc(gameRef, updatedFields);
       console.log("Game updated successfully");
@@ -81,6 +86,17 @@ export default async function updateGame(
       }
     })();
 
+    const pinStateNumber = (() => {
+      switch (rollNum) {
+        case 1:
+          return "pinStateOne";
+        case 2:
+          return "pinStateTwo";
+        case 3:
+          return "pinStateThree";
+      }
+    })();
+
     let points = null;
     if (rollNum == 1) {
       points = 10 - standingPinsCount;
@@ -96,12 +112,24 @@ export default async function updateGame(
       [`game.${frameNum}.${rollNumber}`]: points,
     };
 
+    // for updating of frame type
     if (rollNum == 3 && frameState == null) {
       updatedFields[`game.${frameNum}.${typeNumber}`] = "open";
     } else {
       updatedFields[`game.${frameNum}.${typeNumber}`] = frameState;
     }
 
+    // for updating of pin state (only updates when a frame is finished)
+    if (
+      (rollNum == 1 && frameState != "strike") ||
+      (rollNum == 2 && frameState == null)
+    ) {
+      updatedFields[`game.${frameNum}.${pinStateNumber}`] = null;
+    } else {
+      updatedFields[`game.${frameNum}.${pinStateNumber}`] = pinState;
+    }
+
+    // finally updating the database
     try {
       await updateDoc(gameRef, updatedFields);
       console.log("Game updated successfully");

@@ -28,6 +28,9 @@ export default function generateGame() {
         rollOne: null,
         rollTwo: null,
         rollThree: null,
+        pinStateOne: null,
+        pinStateTwo: null,
+        pinStateThree: null,
       };
       game[i] = frame;
     } else {
@@ -37,6 +40,7 @@ export default function generateGame() {
         score: null,
         rollOne: null,
         rollTwo: null,
+        pinState: null,
       };
       game[i] = frame;
     }
