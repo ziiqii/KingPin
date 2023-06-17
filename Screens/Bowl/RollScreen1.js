@@ -141,7 +141,7 @@ const RollScreen1 = ({ navigation, route }) => {
     <View>
       {/* Scoreboard */}
       <View style={{ alignItems: "stretch" }}>
-        <ScoreBoard />
+        <ScoreBoard Id={gameId}/>
       </View>
 
       {/* Pin Display */}

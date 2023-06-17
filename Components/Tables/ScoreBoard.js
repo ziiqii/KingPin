@@ -1,24 +1,39 @@
+import React, { useState, useEffect } from "react";
 import { Text, View } from "react-native";
-import React from "react";
-import {
-  Table,
-  TableWrapper,
-  Row,
-  Rows,
-  Col,
-  Cols,
-  Cell,
-} from "react-native-reanimated-table";
+import { Table, Row } from "react-native-reanimated-table";
 import styles from "./ScoreBoard.style";
 
-const ScoreBoard = () => {
-  const framesTop = ["1", "2", "3", "4", "5", "6"];
-  const rollsTop = ["2", "5", "8", "1", "5", "/", "X", "", "8", "/", "2", "5"];
-  const scoresTop = ["7", "16", "36", "56", "68", "75"];
+import { db } from "../../firebase";
+import { getAuth } from "firebase/auth";
+import { doc, onSnapshot, query } from "firebase/firestore";
 
-  const framesBot = ["7", "8", "9", "10", "TOT"];
-  const rollsBot = ["7", "/", "6", "3", "8", "/", "7", "/", "4", "?"];
-  const scoresBot = ["91", "100", "117", "131", "131"];
+import parseGame from "../../Functions/parseGame";
+
+const ScoreBoard = (props) => {
+  const framesTop = [1, 2, 3, 4, 5, 6];
+  const framesBot = [7, 8, 9, 10, "TOT"];
+  const [rollsTop, setRollsTop] = useState([]);
+  const [scoresTop, setScoresTop] = useState([]);
+  const [rollsBot, setRollsBot] = useState([]);
+  const [scoresBot, setScoresBot] = useState([]);
+
+  useEffect(() => {
+    const auth = getAuth();
+    const userDoc = doc(db, "users", auth.currentUser?.email);
+    const gameDoc = doc(userDoc, "games", props.Id);
+    const gameQuery = query(gameDoc);
+
+    const unsubscribeGameListener = onSnapshot(gameQuery, (doc) => {
+      // parsedGame is an array of the 4 arrays to be displayed
+      let parsedGame = parseGame(doc.data());
+      setRollsTop(parsedGame[0]);
+      setScoresTop(parsedGame[1]);
+      setRollsBot(parsedGame[2]);
+      setScoresBot(parsedGame[3]);
+    });
+    // Cleanup listener
+    return () => unsubscribeGameListener();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -39,7 +54,7 @@ const ScoreBoard = () => {
           textStyle={styles.tableTop.scoreText}
         />
       </Table>
-      
+
       <Table borderStyle={styles.border}>
         <Row
           data={framesBot}
@@ -60,6 +75,9 @@ const ScoreBoard = () => {
           textStyle={styles.tableBot.scoreText}
         />
       </Table>
+      <View>
+        <Text>{props.Id}</Text>
+      </View>
     </View>
   );
 };

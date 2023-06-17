@@ -2,7 +2,13 @@ import React, { useState, useEffect } from "react";
 import { Button, Text, View, FlatList } from "react-native";
 import { SearchBar } from "@rneui/themed";
 import Modal from "react-native-modal";
-import { doc, collection, onSnapshot, query, orderBy } from "firebase/firestore";
+import {
+  doc,
+  collection,
+  onSnapshot,
+  query,
+  orderBy,
+} from "firebase/firestore";
 import { db } from "../../firebase";
 import CreateBall from "../../Components/BallCollection/CreateBall";
 import DeleteBall from "../../Components/BallCollection/DeleteBall";
@@ -32,10 +38,7 @@ const BallsScreen = () => {
     });
 
     // Cleanup function to unsubscribe from the listener when the component unmounts
-    return () => {
-      unsubscribeBallListener();
-    };
-
+    return () => unsubscribeBallListener();
   }, []);
 
   const renderItem = ({ item }) => (
