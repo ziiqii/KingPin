@@ -19,6 +19,10 @@ export default async function updateGame(
   pinState, // to get the points of that roll
   frameState // to get the "type" of the frame
 ) {
+  function timeout(delay) {
+    return new Promise((res) => setTimeout(res, delay));
+  }
+
   const auth = getAuth();
   const userRef = doc(db, "users", auth.currentUser?.email);
   const gameRef = doc(userRef, "games", gameId);
@@ -141,6 +145,8 @@ export default async function updateGame(
   // determine whether to run calculateAndUpdateScore or not:
   // we will need information of the previous roll to decide whether
   // to calculate score or not in frame 10
+
+  await timeout(1);
 
   if (frameNum != 10) {
     if (rollNum == 2 || frameState == "strike") {

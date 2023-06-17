@@ -37,6 +37,8 @@ export default async function calculateAndUpdateScore(gameId) {
       // whole game with all frames
       const game = gameDoc.data().game;
 
+      console.log(game);
+
       // The start of calculating score
       const frames = { ...game };
       let prevScore = 0;
@@ -49,15 +51,20 @@ export default async function calculateAndUpdateScore(gameId) {
         // for frames that have not been reached yet.
         if (frameNum != 10) {
           if (frame["pinState"] == null) {
-            return;
+            console.log(
+              "Frame number that we will not update the score of: ",
+              frameNum
+            );
+            continue;
           }
         } else {
           // frame 10
           if (frame["rollOne"] == null) {
-            return;
+            continue;
           }
         }
 
+        // calculate and update logic
         if (frameNum === 10) {
           score = calculateFrameTen(frame);
         } else {
@@ -120,8 +127,6 @@ export default async function calculateAndUpdateScore(gameId) {
   }
 
   function calculateSpare(nextFrame) {
-    console.log("calcspare was called");
-    console.log("This is nextFrame.rollOne :", nextFrame.rollOne);
     if (nextFrame.rollOne === 0 || nextFrame.rollOne === null) {
       return 10;
     } else if (nextFrame.rollOne === 10) {
