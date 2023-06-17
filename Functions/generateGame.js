@@ -18,9 +18,6 @@ export default function generateGame() {
 
   for (let i = 1; i <= 10; i++) {
     // frame 10 needs to have three frame types.
-
-    const frame = {};
-
     if (i === 10) {
       const frame = {
         frameNum: i,
