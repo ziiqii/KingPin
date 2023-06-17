@@ -1,7 +1,7 @@
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import { getAuth } from "firebase/auth";
-import updateAndUpdateScore from "./calculateAndUpdateScore";
+import calculateAndUpdateScore from "./calculateAndUpdateScore";
 
 /*
 Takes in a game, frame, roll, and an array of pins.
@@ -33,9 +33,6 @@ export default async function updateGame(
     (state) => state === "converted"
   ).length;
 
-  // think about how to fit "score" into this
-  const score = 999;
-
   // seperating into frame 10 vs non-frame 10
 
   // non-frame 10:
@@ -51,7 +48,6 @@ export default async function updateGame(
 
     const updatedFields = {
       [`game.${frameNum}.${rollNumber}`]: points,
-      // [`game.${frameNum}.score`]: score,
       [`game.${frameNum}.type`]: frameState,
     };
 
@@ -98,7 +94,6 @@ export default async function updateGame(
 
     const updatedFields = {
       [`game.${frameNum}.${rollNumber}`]: points,
-      [`game.${frameNum}.score`]: score,
     };
 
     if (rollNum == 3 && frameState == null) {
@@ -112,6 +107,21 @@ export default async function updateGame(
       console.log("Game updated successfully");
     } catch (error) {
       console.error("Error updating game:", error);
+    }
+  }
+
+  // determine whether to run calculateAndUpdateScore or not:
+  if (frameNum != 10) {
+    if (rollNum == 2 || frameState == "strike") {
+      calculateAndUpdateScore(gameId, rollNum);
+    }
+  } else {
+    // frame 10, score is never calculated on roll1
+    // only 2 cases: either calculate after second roll if second roll was open,
+    // or calculate after third roll.
+
+    if ((rollNum == 2 && frameState == "open") || rollNum == 3) {
+      calculateAndUpdateScore(gameId, rollNum);
     }
   }
 }

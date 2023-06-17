@@ -20,7 +20,11 @@ import { getAuth } from "firebase/auth";
   */
 // game , frameNum
 
-export default async function calculateAndUpdateScore(gameId, frameNum) {
+export default async function calculateAndUpdateScore(gameId, currentRoll) {
+  // if (currentRoll != 2) {
+  //   return;
+  // }
+
   const auth = getAuth();
   const userRef = doc(db, "users", auth.currentUser?.email);
   const gameRef = doc(userRef, "games", gameId);
@@ -33,6 +37,8 @@ export default async function calculateAndUpdateScore(gameId, frameNum) {
       //   "This is the data I'm trying to get :",
       //   gameDoc.data().game[frameNum]["rollOne"]
       // );
+
+      console.log("current full game :", gameDoc.data().game);
 
       // whole game with all frames
       const game = gameDoc.data().game;
@@ -55,7 +61,7 @@ export default async function calculateAndUpdateScore(gameId, frameNum) {
               frames[frameNum + 2]
             );
           } else if (frame.type === "spare") {
-            score = calculateSpare(frame, frames[frameNum + 1]);
+            score = calculateSpare(frames[frameNum + 1]);
           } else {
             score = calculateOpenFrame(frame);
           }
@@ -63,8 +69,13 @@ export default async function calculateAndUpdateScore(gameId, frameNum) {
 
         // updating of score should happen here:
 
+        const newScore = prevScore + score;
+        prevScore = newScore;
+
+        // game[frameNum]["rollOne"]
+
         const updatedScore = {
-          [`game.${frameNum}.score`]: score,
+          [`game.${frameNum}.score`]: newScore,
         };
 
         try {
@@ -73,8 +84,6 @@ export default async function calculateAndUpdateScore(gameId, frameNum) {
         } catch (error) {
           console.error("Error updating score:", error);
         }
-        frame.score = prevScore + score;
-        prevScore = frame.score;
       }
     } else {
       console.log("No such doc");
@@ -104,7 +113,9 @@ export default async function calculateAndUpdateScore(gameId, frameNum) {
   }
 
   function calculateSpare(nextFrame) {
-    if (nextFrame.rollOne === 0) {
+    console.log("calcspare was called");
+    console.log("This is nextFrame.rollOne :", nextFrame.rollOne);
+    if (nextFrame.rollOne === 0 || nextFrame.rollOne === null) {
       return 10;
     } else if (nextFrame.rollOne === 10) {
       return 20;
