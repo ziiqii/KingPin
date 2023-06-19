@@ -134,7 +134,7 @@ const RollScreen1 = ({ navigation, route }) => {
     }
 
     if (rollNum == 3) {
-      navigation.replace("GameOverScreen");
+      navigation.replace("GameOverScreen", { gameId: gameId });
     }
   };
 

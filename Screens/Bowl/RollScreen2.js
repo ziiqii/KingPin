@@ -96,10 +96,10 @@ const RollScreen2 = ({ navigation, route }) => {
         });
       } else if (rollNum == 2 && !spare) {
         // rollNum == 2 but open
-        navigation.replace("GameOverScreen");
+        navigation.replace("GameOverScreen", { gameId: gameId });
       } else {
         // rollNum == 3 (e.g. X, 6, / or X, 6, 3)
-        navigation.replace("GameOverScreen");
+        navigation.replace("GameOverScreen", { gameId: gameId });
       }
       return;
     }
