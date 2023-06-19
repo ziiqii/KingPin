@@ -1,15 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Text, View, TouchableOpacity } from "react-native";
 import PinDown from "../../Components/Buttons/PinDown";
 import PinStand from "../../Components/Buttons/PinStand";
 import PinConv from "../../Components/Buttons/PinConv";
 import ScoreBoard from "../../Components/Tables/ScoreBoard";
 import updateGame from "../../Functions/updateGame";
+import Modal from "react-native-modal";
 
 const RollScreen2 = ({ navigation, route }) => {
   const { frameNum, rollNum, pinState, gameId } = route.params;
   const [newPinState, setNewPinState] = useState(pinState);
   const [newFrameState, setNewFrameState] = useState("open");
+
+  // for toggling the instructions modal
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const toggleModal = () => {
+    setIsModalVisible(!isModalVisible);
+  };
 
   const togglePinState = (id) => {
     const pinType = {
@@ -114,8 +122,16 @@ const RollScreen2 = ({ navigation, route }) => {
     <View>
       {/* Scoreboard */}
       <View style={{ alignItems: "stretch" }}>
-        <ScoreBoard Id={gameId}/>
+        <ScoreBoard Id={gameId} />
       </View>
+
+      {/* Instructions Button */}
+      <TouchableOpacity
+        onPress={toggleModal}
+        style={{ padding: 10, alignSelf: "flex-end" }}
+      >
+        <Text style={{ fontSize: 16, color: "#2e64e5" }}>Instructions</Text>
+      </TouchableOpacity>
 
       {/* Pin Display */}
       <View style={{ flexDirection: "column" }}>
@@ -194,16 +210,30 @@ const RollScreen2 = ({ navigation, route }) => {
         >
           <Text style={{ fontSize: 16, color: "white" }}>Confirm</Text>
         </TouchableOpacity>
-        <Text style={{ fontSize: 16, color: "white", marginTop: 20 }}>
-          Instructions:
-        </Text>
-        <Text style={{ fontSize: 16, color: "white" }}>
-          Select the pins that you have knocked down after your throw, or
-          "Spare" if all pins were knocked down. Select "Reset" to return
-          previously standing pins to the original standing position. Once you
-          are ready, select "Confirm" to affirm your choice.
-        </Text>
       </View>
+
+      {/* Instructions modal */}
+
+      <Modal isVisible={isModalVisible}>
+        <View
+          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+        >
+          <View style={{ backgroundColor: "white", padding: 20 }}>
+            <Text style={{ fontSize: 16 }}>
+              Select the pins that you have knocked down after your throw, or
+              "Spare" if all pins were knocked down. Select "Reset" to return
+              previously standing pins to the original standing position. Once
+              you are ready, select "Confirm" to affirm your choice.
+            </Text>
+            <TouchableOpacity
+              onPress={toggleModal}
+              style={{ marginTop: 20, alignSelf: "flex-end" }}
+            >
+              <Text style={{ fontSize: 16, color: "blue" }}>Close</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };

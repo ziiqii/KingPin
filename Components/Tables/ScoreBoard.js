@@ -75,9 +75,6 @@ const ScoreBoard = (props) => {
           textStyle={styles.tableBot.scoreText}
         />
       </Table>
-      <View>
-        <Text>{props.Id}</Text>
-      </View>
     </View>
   );
 };

@@ -23,7 +23,7 @@ export default StyleSheet.create({
     marginTop: 15,
   },
   forgotButton: {
-    marginVertical: 35,
+    marginVertical: 15,
   },
   navButtonText: {
     fontSize: 18,
