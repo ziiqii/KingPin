@@ -46,6 +46,7 @@ export default function parseGame(game) {
   rollsBot.push(nullPush(game["game"][10]["rollOne"]));
   rollsBot.push(nullPush(game["game"][10]["rollTwo"]));
   rollsBot.push(nullPush(game["game"][10]["rollThree"]));
+  rollsBot.push("");
   scoresBot.push(nullPush(game["game"][10]["score"]));
   nullMax(game["game"][10]["score"]);
   scoresBot.push(nullPush(maxScore));
