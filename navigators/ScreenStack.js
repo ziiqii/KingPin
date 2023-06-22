@@ -11,7 +11,7 @@ export default ScreenStack = ({}) => {
     <Stack.Navigator
       initialRouteName="HomeTab"
       screenOptions={{
-        headerShown: false,
+        // headerShown: false,
         contentStyle: {
           backgroundColor: "#36393f",
         },

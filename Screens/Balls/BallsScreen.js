@@ -51,7 +51,7 @@ const BallsScreen = () => {
 
   return (
     <View>
-      <SearchBar placeholder="Figma balls?" platform="android" />
+      <SearchBar placeholder="What's your ball?" platform="android" />
       <Button title="Add a new ball" onPress={toggleModal} />
       <FlatList
         data={balls}
@@ -66,7 +66,6 @@ const BallsScreen = () => {
         coverScreen={false}
       >
         <View>
-          <Text>Welcome to the modal</Text>
           <CreateBall toggleModal={toggleModal} />
           <Button title="Hide Modal" onPress={toggleModal} />
         </View>

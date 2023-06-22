@@ -10,7 +10,7 @@ Many novice bowlers have found memorising the spots to stand and aim unintuitive
 
 Moreover, it can be difficult to determine areas for improvement as players cannot track their stats during the game.
 
-Furthermore, with the presence of hundreds of different types of bowling balls on the market, bowlers often cannot remember the stats of each ball, and are unsure of which balls to use in their inventory.
+Additionally, with the presence of hundreds of different types of bowling balls on the market, bowlers often cannot remember the stats of each ball, and are unsure of which balls to use in their inventory.
 
 We wish to create an all-in-one bowling companion designed with both beginners and seasoned professionals in mind to provide users with everything they need to do well in bowling.
 
@@ -43,11 +43,14 @@ Upon pressing the pins, the initially white outlined pins with dark background w
 The complete README can be found here: [link](https://docs.google.com/document/d/1x04KUWEXq2gmz5gpR03JLWfmucEww30ZYyzqP7z3CyU/edit?pli=1)
 
 ## Download instructions:
+
 Requirements:
+
 1. [Node.js LTS release](https://nodejs.org/en/)
-3. Expo Go app on your mobile device.
+2. Expo Go app on your mobile device.
 
 Steps:
+
 1. Download the repo [here](https://github.com/ziiqii/KingPin/archive/refs/heads/main.zip).
 2. Extract the file to any destination, and within your IDE, open the 'KingPin-main' folder.
 3. Bring up your terminal in your IDE to check that you are in the correct folder.
@@ -58,5 +61,6 @@ Steps:
 8. Open your camera and scan the QR Code to run the app.
 
 If you have any issues, you can dm us on telegram:
+
 - @zhuyicheng
 - @ziiqii
