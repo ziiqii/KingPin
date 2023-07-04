@@ -65,7 +65,8 @@ const RollScreen1 = ({ navigation, route }) => {
     // Pls stay down
     if (thisStandingAndOthersInitial) {
       setStrike();
-      pinType.down = "down"; // not necessary if "down" pins are disabled
+      pinType.down = "down";
+      setIsStrikeDisabled(true);
     }
 
     // Finally set the pin state

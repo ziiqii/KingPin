@@ -7,7 +7,7 @@ import { db } from "../../firebase";
 import { getAuth } from "firebase/auth";
 import { doc, onSnapshot, query } from "firebase/firestore";
 
-import parseScore from "../../Functions/parseGame";
+import parseScore from "../../Functions/parseScore";
 
 const ScoreBoard = (props) => {
   const framesTop = [1, 2, 3, 4, 5, 6];
