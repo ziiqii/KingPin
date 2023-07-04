@@ -64,9 +64,11 @@ const RollScreen1 = ({ navigation, route }) => {
     );
     // Pls stay down
     if (thisStandingAndOthersInitial) {
-      setStrike();
-      pinType.down = "down";
-      setIsStrikeDisabled(true);
+      // setStrike();
+      // setIsStrikeDisabled(true);
+      setIsConfirmDisabled(true);
+    } else {
+      setIsConfirmDisabled(false);
     }
 
     // Finally set the pin state
@@ -74,8 +76,6 @@ const RollScreen1 = ({ navigation, route }) => {
       ...prevState,
       [id]: pinType[prevState[id]],
     }));
-
-    setIsConfirmDisabled(false);
   };
 
   const setStrike = () => {
@@ -97,10 +97,6 @@ const RollScreen1 = ({ navigation, route }) => {
   };
 
   const confirmPress = () => {
-    // TODO: On strike, write to db and nav to screen 2
-
-    // TODO: Write to db
-    // Non strike: nav to screen 2, "initial" pins -> "down"
     const updatedPinState = Object.fromEntries(
       Object.entries(pinState).map(([id, state]) => [
         id,
