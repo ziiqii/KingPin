@@ -2,7 +2,7 @@
 Converts a game object into an array to be displayed.
 */
 
-export default function parseGame(game) {
+export default function parseScore(game) {
   // Replaces data with empty string if data is null
   const nullPush = (data) => {
     if (data == null) {

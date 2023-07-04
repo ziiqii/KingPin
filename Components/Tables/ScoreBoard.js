@@ -7,7 +7,7 @@ import { db } from "../../firebase";
 import { getAuth } from "firebase/auth";
 import { doc, onSnapshot, query } from "firebase/firestore";
 
-import parseGame from "../../Functions/parseGame";
+import parseScore from "../../Functions/parseGame";
 
 const ScoreBoard = (props) => {
   const framesTop = [1, 2, 3, 4, 5, 6];
@@ -25,7 +25,7 @@ const ScoreBoard = (props) => {
 
     const unsubscribeGameListener = onSnapshot(gameQuery, (doc) => {
       // parsedGame is an array of the 4 arrays to be displayed
-      let parsedGame = parseGame(doc.data());
+      let parsedGame = parseScore(doc.data());
       setRollsTop(parsedGame[0]);
       setScoresTop(parsedGame[1]);
       setRollsBot(parsedGame[2]);
