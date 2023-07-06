@@ -51,7 +51,7 @@ const BallsScreen = () => {
 
   return (
     <View>
-      <SearchBar placeholder="What's your ball?" platform="android" />
+      <SearchBar placeholder="Looking for your ball?" platform="android" />
       <Button title="Add a new ball" onPress={toggleModal} />
       <FlatList
         data={balls}

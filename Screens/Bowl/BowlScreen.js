@@ -1,6 +1,7 @@
 import React from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View } from "react-native";
 import startGame from "../../Functions/startGame";
+import AppButton from "../../Components/Buttons/AppButton";
 
 const BowlScreen = ({ navigation }) => {
   const frameNum = 1;
@@ -25,20 +26,14 @@ const BowlScreen = ({ navigation }) => {
         backgroundColor: "#36393f",
       }}
     >
-      <TouchableOpacity
+      <AppButton
+        buttonTitle="Start Game"
         onPress={() => {
           handleStartGame();
         }}
-        style={{
-          padding: 30,
-        }}
-      >
-        <Text style={{ fontSize: 20, color: "white" }}>Start Game</Text>
-      </TouchableOpacity>
+      />
 
-      <TouchableOpacity>
-        <Text style={{ fontSize: 20, color: "white" }}>Continue Game</Text>
-      </TouchableOpacity>
+      <AppButton buttonTitle="Continue Game" />
     </View>
   );
 };
