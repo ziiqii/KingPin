@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TextInput, Pressable } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Alert } from "react-native";
 import React, { useState } from "react";
 import { doc, collection, addDoc } from "firebase/firestore";
 import { db } from "../../firebase";
@@ -31,14 +31,21 @@ export default function CreateBall({ toggleModal }) {
     }
   };
 
+  const handleAddBall = () => {
+    if (addedBall.balls.trim() === "") {
+      // the "name" field is empty
+      Alert.alert(
+        "Please include the ball name",
+        "The ball name field cannot be empty."
+      );
+      return;
+    }
+    addBall();
+    toggleModal();
+  };
+
   return (
     <View style={styles.container}>
-      {/* <TextInput
-        fontSize={30}
-        placeholder="Ball name"
-        value={addedBall.balls}
-        onChangeText={(text) => setAddedBall({ ...addedBall, balls: text })}
-      /> */}
       <BallInput
         labelValue={addedBall.balls}
         onChangeText={(text) => setAddedBall({ ...addedBall, balls: text })}
@@ -66,14 +73,20 @@ export default function CreateBall({ toggleModal }) {
         placeholderText="Radius of Gyration (RG)"
         keyboardType="numeric"
       />
-      <Pressable
+      <TouchableOpacity
         onPress={() => {
-          addBall();
-          toggleModal();
+          handleAddBall();
+        }}
+        style={{
+          borderRadius: 3,
+          backgroundColor: "#673AB7",
+          padding: 10,
+          paddingHorizontal: 60,
+          margin: 10,
         }}
       >
-        <Text style={{ fontSize: 30 }}>Add Ball</Text>
-      </Pressable>
+        <Text style={{ fontSize: 20, color: "white" }}>Add Ball</Text>
+      </TouchableOpacity>
     </View>
   );
 }

@@ -8,7 +8,6 @@ const ArsenalScreen = () => {
         flex: 1,
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "#36393f",
       }}
     >
       <Text style={{ color: "white" }}>Arsenal</Text>
