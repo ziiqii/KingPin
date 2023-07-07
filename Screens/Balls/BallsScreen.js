@@ -42,15 +42,25 @@ const BallsScreen = () => {
   }, []);
 
   const renderItem = ({ item }) => (
-    <View>
-      <Text style={{ fontSize: 30, textAlign: "center" }}>{item.name}</Text>
+    <View style={{ flexDirection: "row" }}>
       <DeleteBall id={item.id} />
-      <Text></Text>
+      <Text style={{ fontSize: 20, textAlign: "center", color: "white" }}>
+        {item.name}
+      </Text>
+      <Text style={{ fontSize: 20, textAlign: "center", color: "white" }}>
+        {item.weight}
+      </Text>
+      <Text style={{ fontSize: 20, textAlign: "center", color: "white" }}>
+        {item.differential}
+      </Text>
+      <Text style={{ fontSize: 20, textAlign: "center", color: "white" }}>
+        {item.radiusOfGyration}
+      </Text>
     </View>
   );
 
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <SearchBar placeholder="Looking for your ball?" platform="android" />
       <Button title="Add a new ball" onPress={toggleModal} />
       <FlatList
