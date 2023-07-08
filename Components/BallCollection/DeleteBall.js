@@ -6,8 +6,6 @@ import { getAuth } from "firebase/auth";
 import Icon from "react-native-vector-icons/AntDesign";
 
 export default function DeleteBall({ id }) {
-  const [confirmBox, setConfirmBox] = useState(true);
-
   const auth = getAuth();
 
   const deleteBall = async () => {
@@ -34,7 +32,6 @@ export default function DeleteBall({ id }) {
         {
           text: "Confirm",
           onPress: () => {
-            setConfirmBox(false);
             deleteBall();
           },
           style: "destructive",
@@ -51,21 +48,8 @@ export default function DeleteBall({ id }) {
 
   return (
     <View>
-      {/* <Icon.Button name="delete" backgroundColor="#FE6464" onPress={deleteBall}>
-        <Text style={{ fontSize: 15, textAlign: "center" }}>Delete</Text>
-      </Icon.Button> */}
-
       <TouchableOpacity onPress={handleDelete}>
-        <View
-          style={{
-            margin: 10,
-            borderRadius: 8,
-            padding: 10,
-            backgroundColor: "#FE6464",
-          }}
-        >
-          <Icon name="delete" size={20} color="white" />
-        </View>
+        <Icon name="delete" size={20} color="#FE6464" />
       </TouchableOpacity>
     </View>
   );
