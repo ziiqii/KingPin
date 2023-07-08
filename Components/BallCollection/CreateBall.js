@@ -50,6 +50,7 @@ export default function CreateBall({ toggleModal }) {
         labelValue={addedBall.balls}
         onChangeText={(text) => setAddedBall({ ...addedBall, balls: text })}
         placeholderText="Ball name"
+        autoFocus={true}
       />
       <BallInput
         labelValue={addedBall.weight}

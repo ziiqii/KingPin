@@ -5,7 +5,6 @@ import {
   View,
   FlatList,
   TouchableOpacity,
-  Button,
 } from "react-native";
 import { SearchBar } from "@rneui/themed";
 import Modal from "react-native-modal";
@@ -20,8 +19,9 @@ import { db } from "../../firebase";
 import CreateBall from "../../Components/BallCollection/CreateBall";
 import DeleteBall from "../../Components/BallCollection/DeleteBall";
 import { getAuth } from "firebase/auth";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import Icon from "react-native-vector-icons/FontAwesome";
 import _ from "lodash";
+import { TextInput } from "react-native-gesture-handler";
 
 const BallsScreen = () => {
   const auth = getAuth();
@@ -34,22 +34,11 @@ const BallsScreen = () => {
   const [balls, setBalls] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  // The following is for the tableView
-  const [columns, setColumns] = useState([
-    "Name",
-    "Weight",
-    "Differential",
-    "Radius of Gyration",
-  ]);
-  const [direction, setDirection] = useState(null);
-  const [selectedColumn, setSelectedColumn] = useState(null);
-
   useEffect(() => {
     setLoading(true);
     const userRef = doc(db, "users", auth.currentUser?.email); // Reference to this user's document
     const ballRef = collection(userRef, "balls"); // Reference to this user's ball collection
-    // const ballQuery = query(ballRef, orderBy("name", "asc")); // Sorted by name
-    const ballQuery = ballRef;
+    const ballQuery = query(ballRef, orderBy("name", "asc")); // Sorted by name
     const unsubscribeBallListener = onSnapshot(ballQuery, (snapshot) => {
       let ballList = [];
       snapshot.docs.map((doc) => ballList.push({ ...doc.data(), id: doc.id }));
@@ -60,6 +49,23 @@ const BallsScreen = () => {
     // Cleanup function to unsubscribe from the listener when the component unmounts
     return () => unsubscribeBallListener();
   }, []);
+
+  // For searchbar
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handlSearch = (query) => {
+    setSearchQuery(query);
+  };
+
+  // The following is for the tableView
+  const [columns, setColumns] = useState([
+    "Name",
+    "Weight",
+    "Differential",
+    "Radius of Gyration",
+  ]);
+  const [direction, setDirection] = useState(null);
+  const [selectedColumn, setSelectedColumn] = useState(null);
 
   // to help match up the headers of the table with the field names in the firestore
   const mapColumnName = (column) => {
@@ -75,6 +81,7 @@ const BallsScreen = () => {
     }
   };
 
+  // sorting function for table (ascending or descending)
   const sortTable = (column) => {
     const newDirection = direction === "desc" ? "asc" : "desc";
     const mappedColumn = mapColumnName(column);
@@ -95,13 +102,7 @@ const BallsScreen = () => {
           <Text style={styles.columnHeaderTxt}>
             {column + " "}
             {selectedColumn === column && (
-              <MaterialCommunityIcons
-                name={
-                  direction === "desc"
-                    ? "arrow-down-drop-circle"
-                    : "arrow-up-drop-circle"
-                }
-              />
+              <Icon name={direction === "desc" ? "sort-desc" : "sort-asc"} />
             )}
           </Text>
         </TouchableOpacity>
@@ -115,13 +116,39 @@ const BallsScreen = () => {
       <Text style={styles.columnRowTxt}>{item.weight}</Text>
       <Text style={styles.columnRowTxt}>{item.differential}</Text>
       <Text style={styles.columnRowTxt}>{item.radiusOfGyration}</Text>
+
+      <DeleteBall id={item.id} />
     </View>
   );
 
   return (
-    <View style={{ flex: 1 }}>
-      <SearchBar placeholder="Looking for your ball?" platform="android" />
-      <Button title="Add a new ball" onPress={toggleModal} />
+    <View>
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+          paddingHorizontal: 20,
+          backgroundColor: "#ffffff",
+        }}
+      >
+        <View style={{ flex: 1 }}>
+          <SearchBar
+            placeholder="Looking for your ball?"
+            platform="android"
+            autoCapitalize="none"
+            autoCorrect={false}
+            value={searchQuery}
+            onChangeText={(query) => handlSearch(query)}
+          />
+        </View>
+
+        {/* <Button title="Add a new ball" onPress={toggleModal} /> */}
+        <TouchableOpacity onPress={toggleModal}>
+          <Icon name="plus-circle" color="#89CFF0" size={40} />
+        </TouchableOpacity>
+      </View>
+
       <FlatList
         data={balls}
         renderItem={renderItem}
@@ -166,13 +193,15 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-evenly",
     alignItems: "center",
-    backgroundColor: "#37C2D0",
+    backgroundColor: "#8547c2",
     height: 50,
   },
   tableRow: {
     flexDirection: "row",
+    justifyContent: "space-evenly",
     height: 40,
     alignItems: "center",
+    backgroundColor: "#8547c2",
   },
   columnHeader: {
     width: "20%",
@@ -186,5 +215,6 @@ const styles = StyleSheet.create({
   columnRowTxt: {
     width: "20%",
     textAlign: "center",
+    color: "white",
   },
 });
