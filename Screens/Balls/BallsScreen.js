@@ -21,7 +21,7 @@ import DeleteBall from "../../Components/BallCollection/DeleteBall";
 import { getAuth } from "firebase/auth";
 import Icon from "react-native-vector-icons/FontAwesome";
 import _ from "lodash";
-import { TextInput } from "react-native-gesture-handler";
+import filter from "lodash.filter";
 
 const BallsScreen = () => {
   const auth = getAuth();
@@ -32,6 +32,7 @@ const BallsScreen = () => {
   };
 
   const [balls, setBalls] = useState([]);
+  const [filteredBalls, setFilteredBalls] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -43,6 +44,7 @@ const BallsScreen = () => {
       let ballList = [];
       snapshot.docs.map((doc) => ballList.push({ ...doc.data(), id: doc.id }));
       setBalls(ballList);
+      setFilteredBalls(ballList);
       setLoading(false);
     });
 
@@ -55,6 +57,16 @@ const BallsScreen = () => {
 
   const handlSearch = (query) => {
     setSearchQuery(query);
+    const filteredData = filter(filteredBalls, (user) => {
+      return contains(user, query);
+    });
+    setBalls(filteredData);
+  };
+
+  const contains = ({ name }, query) => {
+    const lowerCaseName = name.toLowerCase();
+    const lowerCaseQuery = query.toLowerCase();
+    return lowerCaseName.includes(lowerCaseQuery);
   };
 
   // The following is for the tableView
@@ -122,7 +134,7 @@ const BallsScreen = () => {
   );
 
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <View
         style={{
           flexDirection: "row",
