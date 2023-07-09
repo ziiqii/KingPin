@@ -12,8 +12,10 @@ export default async function startGame() {
 
     try {
       const newGameRef = await addDoc(gamesRef, {
+        date: new Date(),
         game: generateGame(),
       });
+      console.log(new Date());
       console.log("Game written with ID: ", newGameRef.id);
       return newGameRef.id;
     } catch (error) {
