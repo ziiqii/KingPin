@@ -5,6 +5,7 @@ import {
   View,
   FlatList,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
 import { SearchBar } from "@rneui/themed";
 import Modal from "react-native-modal";
@@ -34,6 +35,7 @@ const BallsScreen = () => {
   const [balls, setBalls] = useState([]);
   const [filteredBalls, setFilteredBalls] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     setLoading(true);
@@ -41,11 +43,19 @@ const BallsScreen = () => {
     const ballRef = collection(userRef, "balls"); // Reference to this user's ball collection
     const ballQuery = query(ballRef, orderBy("name", "asc")); // Sorted by name
     const unsubscribeBallListener = onSnapshot(ballQuery, (snapshot) => {
-      let ballList = [];
-      snapshot.docs.map((doc) => ballList.push({ ...doc.data(), id: doc.id }));
-      setBalls(ballList);
-      setFilteredBalls(ballList);
-      setLoading(false);
+      try {
+        let ballList = [];
+        snapshot.docs.map((doc) =>
+          ballList.push({ ...doc.data(), id: doc.id })
+        );
+        setBalls(ballList);
+        setFilteredBalls(ballList);
+      } catch (error) {
+        setError(error);
+        console.error("Error fetching balls: ", error);
+      } finally {
+        setLoading(false);
+      }
     });
 
     // Cleanup function to unsubscribe from the listener when the component unmounts
@@ -132,6 +142,26 @@ const BallsScreen = () => {
       <DeleteBall id={item.id} />
     </View>
   );
+
+  if (loading) {
+    console.log("LOADING");
+    return (
+      <View style={{ flex: 1, justifyContent: "center" }}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
+
+  // Error handling
+  if (error) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center" }}>
+        <Text>
+          Error in fetching data... Please check your internet connection.
+        </Text>
+      </View>
+    );
+  }
 
   return (
     <View style={{ flex: 1 }}>
