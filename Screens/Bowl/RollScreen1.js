@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Text, View, TouchableOpacity } from "react-native";
 import PinInit from "../../Components/Buttons/PinInit";
 import PinDown from "../../Components/Buttons/PinDown";
@@ -9,7 +9,6 @@ import Modal from "react-native-modal";
 
 const RollScreen1 = ({ navigation, route }) => {
   // First, obtain the current game from the database
-
   const { frameNum, rollNum, gameId } = route.params;
   const [frameState, setFrameState] = useState(null);
 
