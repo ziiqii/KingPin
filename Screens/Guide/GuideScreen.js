@@ -5,8 +5,6 @@ import PinStand from "../../Components/Buttons/PinStand";
 import generateSpare from "../../Functions/generateSpareText";
 
 const GuideScreen = () => {
-  const [frameState, setFrameState] = useState(null);
-
   // Initialisation of pinState
   const [pinState, setPinState] = useState(
     // {1: "down", 2: "standing", ...,}
@@ -14,6 +12,9 @@ const GuideScreen = () => {
       Array.from({ length: 10 }, (_, index) => [index + 1, "initial"])
     )
   );
+
+  // Initialise spareState: 1. initial 2. spareFound 3. spareNotFound
+  const [spareState, setSpareState] = useState("initial");
 
   // This toggles the state of the pins
   const togglePinState = (id) => {
@@ -24,10 +25,22 @@ const GuideScreen = () => {
     };
 
     // Set the pin state
-    setPinState((prevState) => ({
-      ...prevState,
-      [id]: pinType[prevState[id]],
-    }));
+    setPinState((prevState) => {
+      const updatedState = {
+        ...prevState,
+        [id]: pinType[prevState[id]],
+      };
+
+      // Check if all pins are in the initial state
+      const allPinsInitial = Object.values(updatedState).every(
+        (state) => state === "initial"
+      );
+
+      // Set the spare state based on allPinsInitial
+      setSpareState(allPinsInitial ? "initial" : "spareNotFound");
+
+      return updatedState;
+    });
   };
 
   const invertedTriangle = {
@@ -48,10 +61,11 @@ const GuideScreen = () => {
     >
       {/* Displays pin #*/}
       <Text style={{ fontSize: 25, color: "#ffffff" }}>
-        {generateSpare(pinState)}
+        Pins: {generateSpare(pinState)}
       </Text>
 
       {/* Display common name if exists in library */}
+      <Text style={{ fontSize: 25, color: "#ffffff" }}>Spare Name: {}</Text>
 
       {/* Pin Display */}
       <View style={{ flexDirection: "column" }}>
@@ -93,6 +107,11 @@ const GuideScreen = () => {
       </View>
 
       {/* Shows button if diagram exists, else display text */}
+      <View>
+        {spareState === "initial" && <Text>nothing to see</Text>}
+        {spareState === "spareFound" && <Text>Spare found!</Text>}
+        {spareState === "spareNotFound" && <Text>No spare found.</Text>}
+      </View>
     </View>
   );
 };
