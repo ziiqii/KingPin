@@ -61,17 +61,22 @@ const GuideScreen = () => {
     const spareName = generateSpare(pinState);
     const picRef = ref(libRef, `/${spareName}.png`);
 
-    getDownloadURL(picRef)
-      .then((url) => {
-        setImageUrl(url);
-        setSpareState("spareFound");
-      })
-      .catch((error) => {
-        setImageUrl(null); // if image does not exist, no url -> not displayed
-        setSpareState(spareName == "" ? "initial" : "spareNotFound");
-        console.log("Error getting URL:", error);
-      });
-  }, [pinState]);
+    if (spareName == "") { // no pins selected
+      setSpareState("initial");
+      setImageUrl(null); // if image does not exist, no url -> not displayed
+    } else { // pins selected
+      getDownloadURL(picRef)
+        .then((url) => { // picture found
+          setImageUrl(url);
+          setSpareState("spareFound");
+        })
+        .catch((error) => { // picture not found
+          setImageUrl(null);
+          setSpareState("spareNotFound");
+          console.log("Error getting URL:", error);
+        });
+    }
+  }, [pinState]); // triggered by dependency array pinState
 
   return (
     <View
