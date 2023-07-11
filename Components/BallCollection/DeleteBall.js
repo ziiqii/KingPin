@@ -48,7 +48,7 @@ export default function DeleteBall({ id }) {
 
   return (
     <View>
-      <TouchableOpacity onPress={handleDelete}>
+      <TouchableOpacity onPress={handleDelete} style={{ margin: 10 }}>
         <Icon name="delete" size={20} color="#FE6464" />
       </TouchableOpacity>
     </View>

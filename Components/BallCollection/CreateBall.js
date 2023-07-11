@@ -43,9 +43,9 @@ export default function CreateBall({ toggleModal }) {
     try {
       const newBallRef = await addDoc(ballCollectionRef, {
         name: addedBall.balls,
-        weight: addedBall.weight,
-        differential: addedBall.Differential,
-        radiusOfGyration: addedBall.RadiusOfGyration,
+        weight: parseInt(addedBall.weight),
+        differential: parseFloat(addedBall.Differential),
+        radiusOfGyration: parseFloat(addedBall.RadiusOfGyration),
         oilCondition: addedBall.oilCondition,
       });
       console.log("Ball written with ID: ", newBallRef.id);
