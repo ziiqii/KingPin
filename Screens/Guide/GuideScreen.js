@@ -1,4 +1,4 @@
-import { Text, View, Image } from "react-native";
+import { Text, View, Image, TouchableOpacity, Modal } from "react-native";
 import { useState, useEffect } from "react";
 import PinInit from "../../Components/Buttons/PinInit";
 import PinStand from "../../Components/Buttons/PinStand";
@@ -61,22 +61,33 @@ const GuideScreen = () => {
     const spareName = generateSpare(pinState);
     const picRef = ref(libRef, `/${spareName}.png`);
 
-    if (spareName == "") { // no pins selected
+    if (spareName == "") {
+      // no pins selected
       setSpareState("initial");
       setImageUrl(null); // if image does not exist, no url -> not displayed
-    } else { // pins selected
+    } else {
+      // pins selected
       getDownloadURL(picRef)
-        .then((url) => { // picture found
+        .then((url) => {
+          // picture found
           setImageUrl(url);
           setSpareState("spareFound");
         })
-        .catch((error) => { // picture not found
+        .catch((error) => {
+          // picture not found
           setImageUrl(null);
           setSpareState("spareNotFound");
           console.log("Error getting URL:", error);
         });
     }
   }, [pinState]); // triggered by dependency array pinState
+
+  // Handling modal
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const toggleModalVisible = () => {
+    setModalVisible(!modalVisible);
+  };
 
   return (
     <View
@@ -136,15 +147,35 @@ const GuideScreen = () => {
 
       {/* Shows button if diagram exists, else display text */}
       <View>
-        {spareState === "initial" && <Text> </Text>}
-        {spareState === "spareFound" && <Text>Spare found!</Text>}
-        {spareState === "spareNotFound" && <Text>No spare found.</Text>}
+        {spareState === "initial" && (
+          <Text style={{ fontSize: 25, color: "#ffffff" }}> </Text>
+        )}
+        {spareState === "spareFound" && (
+          <TouchableOpacity onPress={toggleModalVisible}>
+            <Text style={{ fontSize: 25, color: "#ffffff" }}>View Spare</Text>
+            <Modal visible={modalVisible} onRequestClose={toggleModalVisible}>
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  backgroundColor: "#fff",
+                }}
+              >
+                <Image style={{ width: 247, height: 400 }} source={{ uri: imageUrl }} />
+                <TouchableOpacity onPress={toggleModalVisible}>
+                  <Text>Back</Text>
+                </TouchableOpacity>
+              </View>
+            </Modal>
+          </TouchableOpacity>
+        )}
+        {spareState === "spareNotFound" && (
+          <Text style={{ fontSize: 25, color: "#ffffff" }}>
+            No spare found.
+          </Text>
+        )}
       </View>
-
-      {/* Display image */}
-      {spareState != "initial" && imageUrl && (
-        <Image style={{ width: 60, height: 100 }} source={{ uri: imageUrl }} />
-      )}
     </View>
   );
 };
