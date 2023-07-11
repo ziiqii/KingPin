@@ -86,6 +86,7 @@ const BallsScreen = () => {
     "Differential",
     "Radius of Gyration",
     "Oil Condition",
+    "",
   ]);
   const [direction, setDirection] = useState(null);
   const [selectedColumn, setSelectedColumn] = useState(null);
@@ -110,10 +111,31 @@ const BallsScreen = () => {
   const sortTable = (column) => {
     const newDirection = direction === "desc" ? "asc" : "desc";
     const mappedColumn = mapColumnName(column);
-    const sortedData = _.orderBy(balls, [mappedColumn], [newDirection]);
+    if (mappedColumn === "oilCondition") {
+      const oilConditions = [
+        "Light",
+        "Light-Medium",
+        "Medium",
+        "Medium-Heavy",
+        "Heavy",
+      ];
+      const sortedData = _.orderBy(
+        balls,
+        (ball) => {
+          const index = oilConditions.indexOf(ball[mappedColumn]);
+          return index === -1 ? Infinity : index;
+        },
+        [newDirection]
+      );
+
+      setBalls(sortedData);
+    } else {
+      const sortedData = _.orderBy(balls, [mappedColumn], [newDirection]);
+
+      setBalls(sortedData);
+    }
     setSelectedColumn(column);
     setDirection(newDirection);
-    setBalls(sortedData);
   };
 
   const tableHeader = () => (
@@ -121,7 +143,10 @@ const BallsScreen = () => {
       {columns.map((column, index) => (
         <TouchableOpacity
           key={index}
-          style={styles.columnHeader}
+          style={[
+            styles.columnHeader,
+            index === columns.length - 1 && { width: "10%" },
+          ]}
           onPress={() => sortTable(column)}
         >
           <Text style={styles.columnHeaderTxt}>
