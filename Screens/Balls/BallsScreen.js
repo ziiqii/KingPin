@@ -122,8 +122,10 @@ const BallsScreen = () => {
       const sortedData = _.orderBy(
         balls,
         (ball) => {
-          const index = oilConditions.indexOf(ball[mappedColumn]);
-          return index === -1 ? Infinity : index;
+          const index = ball[mappedColumn]
+            ? oilConditions.indexOf(ball[mappedColumn])
+            : -1;
+          return index === -1 ? -Infinity : index;
         },
         [newDirection]
       );
@@ -145,7 +147,7 @@ const BallsScreen = () => {
           key={index}
           style={[
             styles.columnHeader,
-            index === columns.length - 1 && { width: "10%" },
+            index === columns.length - 1 && { width: "10%" }, // adjust width of the empty column for delete space
           ]}
           onPress={() => sortTable(column)}
         >
