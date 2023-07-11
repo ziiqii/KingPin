@@ -1,8 +1,10 @@
-import { Text, View } from "react-native";
-import { useState } from "react";
+import { Text, View, Image } from "react-native";
+import { useState, useEffect } from "react";
 import PinInit from "../../Components/Buttons/PinInit";
 import PinStand from "../../Components/Buttons/PinStand";
 import generateSpare from "../../Functions/generateSpareText";
+import { storage } from "../../firebase";
+import { ref, getDownloadURL } from "firebase/storage";
 
 const GuideScreen = () => {
   // Initialisation of pinState
@@ -50,6 +52,27 @@ const GuideScreen = () => {
     3: ["1"],
   };
 
+  // Initialising imageUrl state.
+  const [imageUrl, setImageUrl] = useState(null);
+
+  const libRef = ref(storage, "Spare_Library"); // create reference to spare library
+
+  useEffect(() => {
+    const spareName = generateSpare(pinState);
+    const picRef = ref(libRef, `/${spareName}.png`);
+
+    getDownloadURL(picRef)
+      .then((url) => {
+        setImageUrl(url);
+        setSpareState("spareFound");
+      })
+      .catch((error) => {
+        setImageUrl(null); // if image does not exist, no url -> not displayed
+        setSpareState(spareName == "" ? "initial" : "spareNotFound");
+        console.log("Error getting URL:", error);
+      });
+  }, [pinState]);
+
   return (
     <View
       style={{
@@ -81,9 +104,7 @@ const GuideScreen = () => {
             {pins.map((pinId) => {
               const pinType = pinState[pinId];
 
-              switch (
-                pinType // only 2 pinTypes needed
-              ) {
+              switch (pinType) {
                 case "initial":
                   return (
                     <PinInit
@@ -100,6 +121,8 @@ const GuideScreen = () => {
                       onPress={() => togglePinState(pinId)}
                     />
                   );
+                default:
+                  return null;
               }
             })}
           </View>
@@ -108,10 +131,15 @@ const GuideScreen = () => {
 
       {/* Shows button if diagram exists, else display text */}
       <View>
-        {spareState === "initial" && <Text>nothing to see</Text>}
+        {spareState === "initial" && <Text> </Text>}
         {spareState === "spareFound" && <Text>Spare found!</Text>}
         {spareState === "spareNotFound" && <Text>No spare found.</Text>}
       </View>
+
+      {/* Display image */}
+      {spareState != "initial" && imageUrl && (
+        <Image style={{ width: 60, height: 100 }} source={{ uri: imageUrl }} />
+      )}
     </View>
   );
 };
