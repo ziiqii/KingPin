@@ -85,6 +85,7 @@ const BallsScreen = () => {
     "Weight",
     "Differential",
     "Radius of Gyration",
+    "Oil Condition",
   ]);
   const [direction, setDirection] = useState(null);
   const [selectedColumn, setSelectedColumn] = useState(null);
@@ -100,6 +101,8 @@ const BallsScreen = () => {
         return "differential";
       case "Radius of Gyration":
         return "radiusOfGyration";
+      case "Oil Condition":
+        return "oilCondition";
     }
   };
 
@@ -138,13 +141,13 @@ const BallsScreen = () => {
       <Text style={styles.columnRowTxt}>{item.weight}</Text>
       <Text style={styles.columnRowTxt}>{item.differential}</Text>
       <Text style={styles.columnRowTxt}>{item.radiusOfGyration}</Text>
+      <Text style={styles.columnRowTxt}>{item.oilCondition}</Text>
 
       <DeleteBall id={item.id} />
     </View>
   );
 
   if (loading) {
-    console.log("LOADING");
     return (
       <View style={{ flex: 1, justifyContent: "center" }}>
         <ActivityIndicator size="large" />
