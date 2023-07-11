@@ -43,9 +43,16 @@ export default function CreateBall({ toggleModal }) {
     try {
       const newBallRef = await addDoc(ballCollectionRef, {
         name: addedBall.balls,
-        weight: parseInt(addedBall.weight),
-        differential: parseFloat(addedBall.Differential),
-        radiusOfGyration: parseFloat(addedBall.RadiusOfGyration),
+        weight:
+          addedBall.weight.trim() !== "" ? parseInt(addedBall.weight) : "",
+        differential:
+          addedBall.Differential.trim() !== ""
+            ? parseFloat(addedBall.Differential)
+            : "",
+        radiusOfGyration:
+          addedBall.RadiusOfGyration.trim() !== ""
+            ? parseFloat(addedBall.RadiusOfGyration)
+            : "",
         oilCondition: addedBall.oilCondition,
       });
       console.log("Ball written with ID: ", newBallRef.id);
@@ -76,6 +83,7 @@ export default function CreateBall({ toggleModal }) {
             onChangeText={(text) => setAddedBall({ ...addedBall, balls: text })}
             placeholderText="Ball name"
             autoFocus={true}
+            autoCapitalize="words"
           />
           <BallInput
             labelValue={addedBall.weight}
