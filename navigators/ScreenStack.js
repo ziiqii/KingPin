@@ -31,11 +31,6 @@ export default ScreenStack = ({}) => {
 
       <Stack.Screen name="BallsScreen" component={BallsScreen} />
       <Stack.Screen name="ArsenalScreen" component={ArsenalScreen} />
-
-      <Stack.Screen
-        name="BallCollectionStack"
-        component={BallCollectionStack}
-      />
     </Stack.Navigator>
   );
 };
