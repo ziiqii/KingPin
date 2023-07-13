@@ -8,8 +8,6 @@ import GameOverScreen from "../Screens/Bowl/GameOverScreen";
 import BallsScreen from "../Screens/Balls/BallsScreen";
 import ArsenalScreen from "../Screens/Balls/ArsenalScreen";
 
-import BallCollectionStack from "./BallCollectionStack";
-
 const Stack = createNativeStackNavigator();
 
 export default ScreenStack = ({}) => {
