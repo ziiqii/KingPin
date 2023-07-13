@@ -25,6 +25,6 @@ export default function generateSpare(pinState) {
       sparePins.push(pin);
     }
   }
-
-  return sparePins.join("-");
+  
+  return sparePins.length == 0 ? "" : sparePins.join("-");
 }

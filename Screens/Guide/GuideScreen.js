@@ -3,7 +3,8 @@ import { useState, useEffect } from "react";
 import PinInit from "../../Components/Buttons/PinInit";
 import PinStand from "../../Components/Buttons/PinStand";
 import generateSpare from "../../Functions/generateSpareText";
-import { storage } from "../../firebase";
+import { db, storage } from "../../firebase";
+import { doc, getDoc } from "firebase/firestore";
 import { ref, getDownloadURL } from "firebase/storage";
 
 const GuideScreen = () => {
@@ -54,12 +55,40 @@ const GuideScreen = () => {
 
   // Initialising imageUrl state.
   const [imageUrl, setImageUrl] = useState(null);
-
   const libRef = ref(storage, "Spare_Library"); // create reference to spare library
+
+  // Initialising commonName state.
+  const [commonName, setCommonName] = useState(" ");
+
+  const getSpareName = async (spareName) => {
+    // function returns name else null
+    const spareRef = doc(db, "spare-library", spareName);
+    const spareSnap = await getDoc(spareRef);
+    if (spareSnap.exists()) {
+      setCommonName("Spare Name: " + spareSnap.data().name);
+    } else {
+      setCommonName(" ");
+    }
+  };
+
+  const getImage = async (spareName) => {
+    const picRef = ref(libRef, `/${spareName}.png`);
+    getDownloadURL(picRef)
+      .then((url) => {
+        // picture found
+        setImageUrl(url);
+        setSpareState("spareFound");
+      })
+      .catch((error) => {
+        // picture not found
+        setImageUrl(null);
+        setSpareState("spareNotFound");
+        // console.log("Error getting URL:", error);
+      });
+  };
 
   useEffect(() => {
     const spareName = generateSpare(pinState);
-    const picRef = ref(libRef, `/${spareName}.png`);
 
     if (spareName == "") {
       // no pins selected
@@ -67,18 +96,8 @@ const GuideScreen = () => {
       setImageUrl(null); // if image does not exist, no url -> not displayed
     } else {
       // pins selected
-      getDownloadURL(picRef)
-        .then((url) => {
-          // picture found
-          setImageUrl(url);
-          setSpareState("spareFound");
-        })
-        .catch((error) => {
-          // picture not found
-          setImageUrl(null);
-          setSpareState("spareNotFound");
-          console.log("Error getting URL:", error);
-        });
+      getSpareName(spareName); // updates spare name
+      getImage(spareName);
     }
   }, [pinState]); // triggered by dependency array pinState
 
@@ -104,7 +123,7 @@ const GuideScreen = () => {
       </Text>
 
       {/* Display common name if exists in library */}
-      <Text style={{ fontSize: 25, color: "#ffffff" }}>Spare Name: {}</Text>
+      <Text style={{ fontSize: 25, color: "#ffffff" }}>{commonName}</Text>
 
       {/* Pin Display */}
       <View style={{ flexDirection: "column" }}>
@@ -162,7 +181,10 @@ const GuideScreen = () => {
                   backgroundColor: "#fff",
                 }}
               >
-                <Image style={{ width: 247, height: 400 }} source={{ uri: imageUrl }} />
+                <Image
+                  style={{ width: 247, height: 400 }}
+                  source={{ uri: imageUrl }}
+                />
                 <TouchableOpacity onPress={toggleModalVisible}>
                   <Text>Back</Text>
                 </TouchableOpacity>
