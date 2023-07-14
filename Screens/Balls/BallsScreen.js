@@ -86,7 +86,7 @@ const BallsScreen = () => {
     "Differential",
     "Radius of Gyration",
     "Oil Condition",
-    "",
+    "", // empty column for delete button
   ]);
   const [direction, setDirection] = useState(null);
   const [selectedColumn, setSelectedColumn] = useState(null);

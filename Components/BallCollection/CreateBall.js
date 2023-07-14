@@ -7,7 +7,6 @@ import {
   KeyboardAvoidingView,
   Keyboard,
   TouchableWithoutFeedback,
-  ScrollView,
 } from "react-native";
 import React, { useState } from "react";
 import { doc, collection, addDoc } from "firebase/firestore";

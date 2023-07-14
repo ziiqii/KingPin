@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Text, View, TouchableOpacity, Alert } from "react-native";
+import React from "react";
+import { View, TouchableOpacity, Alert } from "react-native";
 import { collection, deleteDoc, doc } from "firebase/firestore";
 import { db } from "../../firebase";
 import { getAuth } from "firebase/auth";

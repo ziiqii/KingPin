@@ -18,7 +18,6 @@ export default ScreenStack = ({}) => {
         contentStyle: {
           backgroundColor: "#36393f",
         },
-        // headerShown: false,
       }}
     >
       <Stack.Screen name="HomeTab" component={HomeTab} />

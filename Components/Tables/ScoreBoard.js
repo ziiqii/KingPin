@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import { Table, Row } from "react-native-reanimated-table";
 import styles from "./ScoreBoard.style";
 
